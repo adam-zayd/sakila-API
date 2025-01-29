@@ -1,6 +1,7 @@
 package com.example.sakila.dto.output;
 
 import com.example.sakila.entities.Film;
+import com.example.sakila.entities.Language;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.util.List;
@@ -14,7 +15,7 @@ public class FilmOutput{
     private String releaseYear;
     private Short length;
     private String rating;
-    private String language;
+    private Language language;
 
     private List<PartialActorOutput> actors;
 

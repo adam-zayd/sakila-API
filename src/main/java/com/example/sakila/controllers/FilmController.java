@@ -1,5 +1,7 @@
 package com.example.sakila.controllers;
 
+import com.example.sakila.dto.output.ActorOutput;
+import com.example.sakila.dto.output.FilmOutput;
 import com.example.sakila.entities.Actor;
 import com.example.sakila.entities.Film;
 import com.example.sakila.repositories.FilmRepository;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class FilmController {
@@ -20,13 +23,18 @@ public class FilmController {
     }
 
     @GetMapping("/films")
-    public List<Film> getAllFilms(){
-        return filmRepo.findAll();
+    public List<FilmOutput> getAllFilms(@RequestParam(required = false) Optional<String> title){
+        return title.map(value -> filmRepo.findAllByTitleContainingIgnoreCase(value))
+                .orElseGet(()->filmRepo.findAll())
+                .stream()
+                .map(FilmOutput::from)
+                .toList();
     }
 
     @GetMapping("/films/{id}")
-    public Film getFilmUsingID(@PathVariable Short id){
-        return filmRepo.findById(id)
+    public FilmOutput getFilmUsingID(@PathVariable Short id){
+        return  filmRepo.findById(id)
+                .map(FilmOutput::from)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
