@@ -1,5 +1,6 @@
 package com.example.sakila.controllers;
 
+import com.example.sakila.entities.Actor;
 import com.example.sakila.entities.Film;
 import com.example.sakila.repositories.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,9 @@ public class FilmController {
 
 
     @PostMapping ("/films")
-    public String createFilm(){
-        return "Creates a new film";
-    }//creates film
+    public Film createFilm(@RequestBody Film film) {
+        return filmRepo.save(film);
+    }
 
     @PutMapping ("/films")
     public String replaceFilm(){

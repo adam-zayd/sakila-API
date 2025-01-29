@@ -29,15 +29,15 @@ public class ActorController {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping ("/actors/{id}/films")
-    public String getActorsFilms(@PathVariable Short id){
-        return "reads actors films using actor id";
-    }
-    
+//    @GetMapping ("/actors/{id}/films")
+//    public String getActorsFilms(@PathVariable Short id){
+//        return "reads actors films using actor id";
+//    }
+
     @PostMapping ("/actors")
-    public String createActor(){
-        return "Creates a new actor";
-    }//creates actor
+    public Actor createActor(@RequestBody Actor actor) {
+        return actorRepo.save(actor);
+    }
 
     @PutMapping ("/actors")
     public String replaceActor(){
