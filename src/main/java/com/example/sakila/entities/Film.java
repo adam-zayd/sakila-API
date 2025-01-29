@@ -30,7 +30,7 @@ public class Film {
     private String rating;
 
     @ManyToOne
-    @JoinColumn(name="langauge_id")
+    @JoinColumn(name="language_id")
     private Language language;
 
     @ManyToMany
