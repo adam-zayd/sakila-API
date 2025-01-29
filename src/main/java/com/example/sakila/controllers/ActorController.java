@@ -29,21 +29,11 @@ public class ActorController {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/actors/{id}/description")
-    public String getActorDescription(@PathVariable Short id){
-        return "reads actors description using actor id";
-    }
-
     @GetMapping ("/actors/{id}/films")
     public String getActorsFilms(@PathVariable Short id){
         return "reads actors films using actor id";
     }
-
-//    @GetMapping("/actors")
-//    public String getActorUsingName(@RequestParam(required=false)String f){//must have at least one
-//        return "reads actors with that name";
-//    }
-
+    
     @PostMapping ("/actors")
     public String createActor(){
         return "Creates a new actor";
