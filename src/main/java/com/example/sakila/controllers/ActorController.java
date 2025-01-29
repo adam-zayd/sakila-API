@@ -1,5 +1,6 @@
 package com.example.sakila.controllers;
 
+import com.example.sakila.dto.output.ActorOutput;
 import com.example.sakila.entities.Actor;
 import com.example.sakila.repositories.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ActorController {
@@ -19,13 +21,18 @@ public class ActorController {
     }
 
     @GetMapping("/actors")
-    public List<Actor> getAllActors(){
-        return actorRepo.findAll();
+    public List<ActorOutput> getAllActors(@RequestParam(required = false) Optional<String> name){
+        return name.map(value -> actorRepo.findAllByFullNameContainingIgnoreCase(value))
+                .orElseGet(()->actorRepo.findAll())
+                .stream()
+                .map(ActorOutput::from)
+                .toList();
     }
 
     @GetMapping("/actors/{id}")
-    public Actor getActorUsingId(@PathVariable Short id){
+    public ActorOutput getActorUsingId(@PathVariable Short id){
         return actorRepo.findById(id)
+                .map(ActorOutput::from)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 

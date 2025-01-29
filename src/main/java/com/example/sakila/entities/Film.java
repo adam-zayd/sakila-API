@@ -3,6 +3,8 @@ package com.example.sakila.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.List;
+
 @Entity
 @Table(name="film")
 @Getter
@@ -26,5 +28,18 @@ public class Film {
 
     @Column(name="rating")
     private String rating;
+
+    @ManyToOne
+    @JoinColumn(name="langauge_id")
+    private Language language;
+
+    @ManyToMany
+    @JoinTable(
+            name="film_actor",
+            joinColumns = {@JoinColumn(name="film_id")},
+            inverseJoinColumns= {@JoinColumn(name="actor_id")}
+    )
+    private List<Actor> cast;
+
 
 }
