@@ -1,30 +1,32 @@
 package com.example.sakila.controllers;
 
+import com.example.sakila.dto.ValidationGroup;
 import com.example.sakila.dto.input.ActorInput;
 import com.example.sakila.dto.output.ActorOutput;
 import com.example.sakila.entities.Actor;
-import com.example.sakila.entities.Film;
 import com.example.sakila.repositories.ActorRepository;
 import com.example.sakila.repositories.FilmRepository;
+import com.example.sakila.services.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import static com.example.sakila.dto.ValidationGroup.Update;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 
-import static java.util.stream.Collectors.toList;
-
 @RestController
 public class ActorController {
+    private final ActorService actorService;
     private ActorRepository actorRepo;
     private FilmRepository filmRepo;
 
     @Autowired
-    public ActorController(ActorRepository actorRepo, FilmRepository filmRepo){
+    public ActorController(ActorService actorService,ActorRepository actorRepo, FilmRepository filmRepo){
         this.actorRepo= actorRepo;
         this.filmRepo= filmRepo;
     }
@@ -51,7 +53,7 @@ public class ActorController {
 //    }
 
     @PostMapping ("/actors")
-    public ActorOutput createActor(@RequestBody ActorInput actorInput){
+    public ActorOutput createActor(@Validated @RequestBody ActorInput actorInput){
         final var actor= new Actor();
         actor.setFirstName(actorInput.getFirstName().toUpperCase());
         actor.setLastName(actorInput.getLastName().toUpperCase());
@@ -68,7 +70,7 @@ public class ActorController {
     }
 
     @PutMapping("/actors/{id}")
-    public ActorOutput replaceActor(@PathVariable Short id, @RequestBody ActorInput actorInput){
+    public ActorOutput replaceActor(@PathVariable Short id, @Validated (ValidationGroup.Create.class) @RequestBody ActorInput actorInput){
         final var actor= actorRepo.findById(id)
                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
 
