@@ -13,6 +13,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import static java.util.stream.Collectors.toList;
 
@@ -56,8 +58,7 @@ public class ActorController {
 
         final var films= actorInput.getFilms()
                         .stream()
-                .map(filmId -> filmRepo
-                        .findById(filmId)
+                .map(filmId -> filmRepo.findById(filmId)
                         .orElseThrow(()-> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
                                 .toList();
 
@@ -74,11 +75,12 @@ public class ActorController {
         actor.setFirstName(actorInput.getFirstName().toUpperCase());
         actor.setLastName(actorInput.getLastName().toUpperCase());
 
+
         final var films = actorInput.getFilms()
                                     .stream()
                                     .map(filmId -> filmRepo.findById(filmId)
                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Film not found")))
-                                    .toList();
+                                    .collect(Collectors.toCollection(ArrayList::new));
         actor.setFilms(films);
 
         final var updatedActor = actorRepo.save(actor);

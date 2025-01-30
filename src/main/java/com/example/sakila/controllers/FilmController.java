@@ -88,5 +88,4 @@ public class FilmController {
                                       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
             filmRepo.delete(film);
         }
-
     }
