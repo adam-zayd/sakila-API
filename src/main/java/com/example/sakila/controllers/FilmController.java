@@ -13,8 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class FilmController {
@@ -71,9 +74,30 @@ public class FilmController {
         return FilmOutput.from(saved);
     }
 
-    @PutMapping ("/films")
-    public String replaceFilm(){
-        return "Updates a film by replacing with req body";
+    @PutMapping("/films/{id}")
+    public FilmOutput updateFilm(@PathVariable Short id, @RequestBody FilmInput filmInput) {
+        final var film = filmRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
+
+        film.setTitle(filmInput.getTitle().toUpperCase());
+        film.setDescription(filmInput.getDescription());
+        film.setReleaseYear(filmInput.getReleaseYear());
+        film.setLength(filmInput.getLength());
+        film.setRating(filmInput.getRating());
+
+        final var language = languageRepo.findById(filmInput.getLanguage().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid language"));
+        film.setLanguage(language);
+        
+        final var cast = filmInput.getCast()
+                .stream()
+                .map(actorId -> actorRepo.findById(actorId)
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Actor not found")))
+                .collect(Collectors.toCollection(ArrayList::new));
+        film.setCast(cast);
+
+        final var updatedFilm = filmRepo.save(film);
+        return FilmOutput.from(updatedFilm);
     }
 
     @PatchMapping("/films")
