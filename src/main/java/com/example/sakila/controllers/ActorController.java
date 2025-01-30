@@ -1,8 +1,11 @@
 package com.example.sakila.controllers;
 
+import com.example.sakila.dto.input.ActorInput;
 import com.example.sakila.dto.output.ActorOutput;
 import com.example.sakila.entities.Actor;
+import com.example.sakila.entities.Film;
 import com.example.sakila.repositories.ActorRepository;
+import com.example.sakila.repositories.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +14,17 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @RestController
 public class ActorController {
     private ActorRepository actorRepo;
+    private FilmRepository filmRepo;
 
     @Autowired
-    public ActorController(ActorRepository actorRepo){
+    public ActorController(ActorRepository actorRepo, FilmRepository filmRepo){
         this.actorRepo= actorRepo;
+        this.filmRepo=filmRepo;
     }
 
     @GetMapping("/actors")
@@ -42,8 +49,21 @@ public class ActorController {
 //    }
 
     @PostMapping ("/actors")
-    public Actor createActor(@RequestBody Actor actor) {
-        return actorRepo.save(actor);
+    public ActorOutput createActor(@RequestBody ActorInput actorInput) {
+        final var actor= new Actor();
+        actor.setFirstName(actorInput.getFirstName().toUpperCase());
+        actor.setLastName(actorInput.getLastName().toUpperCase());
+
+        final var films= actorInput.getFilms()
+                        .stream()
+                .map(filmId -> filmRepo
+                        .findById(filmId)
+                        .orElseThrow(()-> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
+                                .toList();
+
+        actor.setFilms(films);
+        final var saved= actorRepo.save(actor);
+        return ActorOutput.from(saved);
     }
 
     @PutMapping ("/actors")

@@ -1,17 +1,22 @@
 package com.example.sakila.entities;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="actor")
 @Getter
+@Setter
 public class Actor {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     @Column(name="actor_id")
     private Short actorId;
 
@@ -22,9 +27,11 @@ public class Actor {
     private String lastName;
 
     @ManyToMany(mappedBy= "cast")
-    private List<Film> films;
+    //@Setter(AccessLevel.NONE)
+    private List<Film> films=new ArrayList<>();
 
     @Formula("concat(first_name, ' ', last_name)")
+    @Setter(AccessLevel.NONE)
     private String fullName;
 
 
