@@ -66,18 +66,35 @@ public class ActorController {
         return ActorOutput.from(saved);
     }
 
-    @PutMapping ("/actors")
-    public String replaceActor(){
-        return "Updates an actor by replacing with req body";
-    }//updates actor using put
+    @PutMapping("/actors/{id}")
+    public ActorOutput updateActor(@PathVariable Short id, @RequestBody ActorInput actorInput) {
+        final var actor = actorRepo.findById(id)
+                                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
 
+        actor.setFirstName(actorInput.getFirstName().toUpperCase());
+        actor.setLastName(actorInput.getLastName().toUpperCase());
+
+        final var films = actorInput.getFilms()
+                                    .stream()
+                                    .map(filmId -> filmRepo.findById(filmId)
+                                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Film not found")))
+                                    .toList();
+        actor.setFilms(films);
+
+        final var updatedActor = actorRepo.save(actor);
+        return ActorOutput.from(updatedActor);
+    }
+    
     @PatchMapping("/actors")
     public String updateActor(){
         return "updates actor by modifying fields using req body";
     }//updates actor using patch
 
     @DeleteMapping("/actors")
-    public String deleteActor(@RequestParam Short id){
-        return "deletes actor using actor_id";
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteActor(@RequestParam Short id){
+        final var actor = actorRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
+        actorRepo.delete(actor);
     }
 }

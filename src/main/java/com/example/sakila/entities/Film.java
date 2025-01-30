@@ -1,16 +1,20 @@
 package com.example.sakila.entities;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name="film")
 @Getter
+@Setter
 public class Film {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     @Column(name="film_id")
     private Short filmId;
 
