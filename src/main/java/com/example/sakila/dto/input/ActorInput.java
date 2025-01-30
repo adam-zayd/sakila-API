@@ -1,8 +1,7 @@
 package com.example.sakila.dto.input;
 
 import static com.example.sakila.dto.ValidationGroup.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public class ActorInput {
     @Size(min=1,max=45)
     private String firstName;
 
-    @NotNull
+    @NotNull (groups={Create.class})
     @Size(min=1,max=45)
     private String lastName;
 
