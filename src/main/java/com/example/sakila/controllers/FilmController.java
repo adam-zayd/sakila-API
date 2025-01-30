@@ -29,11 +29,11 @@ public class FilmController {
     public FilmController(FilmRepository filmRepo, ActorRepository actorRepo, LanguageRepository languageRepo){
         this.actorRepo= actorRepo;
         this.filmRepo= filmRepo;
-        this.languageRepo = languageRepo;
+        this.languageRepo= languageRepo;
     }
 
     @GetMapping("/films")
-    public List<FilmOutput> getAllFilms(@RequestParam(required = false) Optional<String> title){
+    public List<FilmOutput> getAllFilms(@RequestParam(required= false) Optional<String> title){
         return title.map(value -> filmRepo.findAllByTitleContainingIgnoreCase(value))
                 .orElseGet(()->filmRepo.findAll())
                 .stream()
@@ -45,12 +45,12 @@ public class FilmController {
     public FilmOutput getFilmUsingID(@PathVariable Short id){
         return  filmRepo.findById(id)
                 .map(FilmOutput::from)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
 
     @PostMapping ("/films")
-    public FilmOutput createFilm(@RequestBody FilmInput filmInput) {
+    public FilmOutput createFilm(@RequestBody FilmInput filmInput){
         final var film= new Film();
         film.setTitle(filmInput.getTitle().toUpperCase());
         film.setDescription(filmInput.getDescription());
@@ -58,7 +58,7 @@ public class FilmController {
         film.setLength(filmInput.getLength());
         film.setRating(filmInput.getRating());
 
-        final var language = languageRepo.findById(filmInput.getLanguage().getId())
+        final var language= languageRepo.findById(filmInput.getLanguage().getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid language"));
         film.setLanguage(language);
 
@@ -66,7 +66,7 @@ public class FilmController {
                 .stream()
                 .map(actorId -> actorRepo
                         .findById(actorId)
-                        .orElseThrow(()-> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
+                        .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
                 .toList();
 
         film.setCast(cast);
@@ -76,7 +76,7 @@ public class FilmController {
 
     @PutMapping("/films/{id}")
     public FilmOutput updateFilm(@PathVariable Short id, @RequestBody FilmInput filmInput) {
-        final var film = filmRepo.findById(id)
+        final var film= filmRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
 
         film.setTitle(filmInput.getTitle().toUpperCase());
@@ -85,30 +85,63 @@ public class FilmController {
         film.setLength(filmInput.getLength());
         film.setRating(filmInput.getRating());
 
-        final var language = languageRepo.findById(filmInput.getLanguage().getId())
+        final var language= languageRepo.findById(filmInput.getLanguage().getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid language"));
         film.setLanguage(language);
-        
-        final var cast = filmInput.getCast()
+
+        final var cast= filmInput.getCast()
                 .stream()
                 .map(actorId -> actorRepo.findById(actorId)
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Actor not found")))
                 .collect(Collectors.toCollection(ArrayList::new));
         film.setCast(cast);
 
-        final var updatedFilm = filmRepo.save(film);
+        final var updatedFilm= filmRepo.save(film);
         return FilmOutput.from(updatedFilm);
     }
 
-    @PatchMapping("/films")
-    public String updateFilm(){
-        return "updates film by modifying fields using req body";
+    @PatchMapping("/films/{id}")
+    public FilmOutput modifyFilm(@PathVariable Short id, @RequestBody FilmInput filmInput){
+        final var film= filmRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
+
+        if (filmInput.getTitle()!=null){
+            film.setTitle(filmInput.getTitle().toUpperCase());
+        }
+        if (filmInput.getDescription()!=null){
+            film.setDescription(filmInput.getDescription());
+        }
+        if (filmInput.getReleaseYear()!=null){
+            film.setReleaseYear(filmInput.getReleaseYear());
+        }
+        if (filmInput.getLength()!=null){
+            film.setLength(filmInput.getLength());
+        }
+        if (filmInput.getRating()!=null){
+            film.setRating(filmInput.getRating());
+        }
+        if (filmInput.getLanguage()!=null){
+            final var language= languageRepo.findById(filmInput.getLanguage().getId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid language"));
+            film.setLanguage(language);
+        }
+        if (filmInput.getCast()!=null){
+            final var cast= filmInput.getCast()
+                    .stream()
+                    .map(actorId -> actorRepo.findById(actorId)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Actor not found")))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            film.setCast(cast);
+        }
+
+        final var updatedFilm= filmRepo.save(film);
+        return FilmOutput.from(updatedFilm);
     }
 
     @DeleteMapping("/films")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFilm(@RequestParam Short id){
-            final var film = filmRepo.findById(id)
+            final var film= filmRepo.findById(id)
                                       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
             filmRepo.delete(film);
         }

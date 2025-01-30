@@ -26,11 +26,11 @@ public class ActorController {
     @Autowired
     public ActorController(ActorRepository actorRepo, FilmRepository filmRepo){
         this.actorRepo= actorRepo;
-        this.filmRepo=filmRepo;
+        this.filmRepo= filmRepo;
     }
 
     @GetMapping("/actors")
-    public List<ActorOutput> getAllActors(@RequestParam(required = false) Optional<String> name){
+    public List<ActorOutput> getAllActors(@RequestParam(required= false) Optional<String> name){
         return name.map(value -> actorRepo.findAllByFullNameContainingIgnoreCase(value))
                 .orElseGet(()->actorRepo.findAll())
                 .stream()
@@ -42,7 +42,7 @@ public class ActorController {
     public ActorOutput getActorUsingId(@PathVariable Short id){
         return actorRepo.findById(id)
                 .map(ActorOutput::from)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
 //    @GetMapping ("/actors/{id}/films")
@@ -51,7 +51,7 @@ public class ActorController {
 //    }
 
     @PostMapping ("/actors")
-    public ActorOutput createActor(@RequestBody ActorInput actorInput) {
+    public ActorOutput createActor(@RequestBody ActorInput actorInput){
         final var actor= new Actor();
         actor.setFirstName(actorInput.getFirstName().toUpperCase());
         actor.setLastName(actorInput.getLastName().toUpperCase());
@@ -59,7 +59,7 @@ public class ActorController {
         final var films= actorInput.getFilms()
                         .stream()
                 .map(filmId -> filmRepo.findById(filmId)
-                        .orElseThrow(()-> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
+                        .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
                                 .toList();
 
         actor.setFilms(films);
@@ -68,34 +68,53 @@ public class ActorController {
     }
 
     @PutMapping("/actors/{id}")
-    public ActorOutput updateActor(@PathVariable Short id, @RequestBody ActorInput actorInput) {
-        final var actor = actorRepo.findById(id)
+    public ActorOutput replaceActor(@PathVariable Short id, @RequestBody ActorInput actorInput){
+        final var actor= actorRepo.findById(id)
                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
 
         actor.setFirstName(actorInput.getFirstName().toUpperCase());
         actor.setLastName(actorInput.getLastName().toUpperCase());
 
 
-        final var films = actorInput.getFilms()
+        final var films= actorInput.getFilms()
                                     .stream()
                                     .map(filmId -> filmRepo.findById(filmId)
                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Film not found")))
                                     .collect(Collectors.toCollection(ArrayList::new));
         actor.setFilms(films);
 
-        final var updatedActor = actorRepo.save(actor);
+        final var updatedActor= actorRepo.save(actor);
         return ActorOutput.from(updatedActor);
     }
     
-    @PatchMapping("/actors")
-    public String updateActor(){
-        return "updates actor by modifying fields using req body";
-    }//updates actor using patch
+    @PatchMapping("/actors/{id}")
+    public ActorOutput modifyActor(@PathVariable Short id, @RequestBody ActorInput actorInput){
+        final var actor= actorRepo.findById(id)
+                                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
+
+        if (actorInput.getFirstName()!=null){
+            actor.setFirstName(actorInput.getFirstName().toUpperCase());
+        }
+        if (actorInput.getLastName()!=null){
+            actor.setLastName(actorInput.getLastName().toUpperCase());
+        }
+        if (actorInput.getFilms()!=null){
+            final var films= actorInput.getFilms()
+                                        .stream()
+                                        .map(filmId -> filmRepo.findById(filmId)
+                                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Film not found")))
+                                        .collect(Collectors.toCollection(ArrayList::new));
+            actor.setFilms(films);
+        }
+
+        final var updatedActor= actorRepo.save(actor);
+        return ActorOutput.from(updatedActor);
+    }
 
     @DeleteMapping("/actors")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteActor(@RequestParam Short id){
-        final var actor = actorRepo.findById(id)
+        final var actor= actorRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
         actorRepo.delete(actor);
     }
