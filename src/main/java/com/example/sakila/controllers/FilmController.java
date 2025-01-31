@@ -77,7 +77,7 @@ public class FilmController {
     }
 
     @PutMapping("/films/{id}")
-    public FilmOutput updateFilm(@PathVariable Short id, @Validated(ValidationGroup.Create.class) @RequestBody FilmInput filmInput) {
+    public FilmOutput updateFilm(@PathVariable Short id, @Validated(ValidationGroup.Replace.class) @RequestBody FilmInput filmInput) {
         final var film= filmRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
 
@@ -103,7 +103,7 @@ public class FilmController {
     }
 
     @PatchMapping("/films/{id}")
-    public FilmOutput modifyFilm(@PathVariable Short id, @Validated @RequestBody FilmInput filmInput){
+    public FilmOutput modifyFilm(@PathVariable Short id, @Validated(ValidationGroup.Update.class) @RequestBody FilmInput filmInput){
         final var film= filmRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
 

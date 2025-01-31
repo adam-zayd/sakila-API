@@ -26,8 +26,12 @@ public class Actor {
     @Column(name="last_name")
     private String lastName;
 
-    @ManyToMany(mappedBy= "cast")
-    //@Setter(AccessLevel.NONE)
+    @ManyToMany
+    @JoinTable(
+            name="film_actor",
+            joinColumns = {@JoinColumn(name="actor_id")},
+            inverseJoinColumns= {@JoinColumn(name="film_id")}
+    )
     private List<Film> films=new ArrayList<>();
 
     @Formula("concat(first_name, ' ', last_name)")

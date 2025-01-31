@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 public class FilmInput {
-    @NotNull(groups= {Create.class}, message= "Title can not be empty")
+    @NotNull(groups= {Create.class, Replace.class}, message= "Title can not be empty")
     @Size(min= 1, max= 128, message= "Title must be between 1 and 128 characters")
     private String title;
 
@@ -23,7 +23,7 @@ public class FilmInput {
     @Pattern(regexp= "^(G|PG|PG-13|R|NC-17)$", message= "Ratings must be one of: G/PG/PG-13/R/NC-17")
     private String rating;
 
-    @NotNull(groups= {Create.class}, message= "You must enter a language ID")
+    @NotNull(groups= {Create.class, Replace.class}, message= "You must enter a language ID")
     private Language language;
 
     private List<Short> cast;
