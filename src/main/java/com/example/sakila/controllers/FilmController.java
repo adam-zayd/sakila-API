@@ -1,5 +1,6 @@
 package com.example.sakila.controllers;
 
+import com.example.sakila.dto.ValidationGroup;
 import com.example.sakila.dto.input.ActorInput;
 import com.example.sakila.dto.input.FilmInput;
 import com.example.sakila.dto.output.ActorOutput;
@@ -11,6 +12,7 @@ import com.example.sakila.repositories.FilmRepository;
 import com.example.sakila.repositories.LanguageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -50,7 +52,7 @@ public class FilmController {
 
 
     @PostMapping ("/films")
-    public FilmOutput createFilm(@RequestBody FilmInput filmInput){
+    public FilmOutput createFilm(@Validated(ValidationGroup.Create.class) @RequestBody FilmInput filmInput){
         final var film= new Film();
         film.setTitle(filmInput.getTitle().toUpperCase());
         film.setDescription(filmInput.getDescription());
@@ -75,7 +77,7 @@ public class FilmController {
     }
 
     @PutMapping("/films/{id}")
-    public FilmOutput updateFilm(@PathVariable Short id, @RequestBody FilmInput filmInput) {
+    public FilmOutput updateFilm(@PathVariable Short id, @Validated(ValidationGroup.Create.class) @RequestBody FilmInput filmInput) {
         final var film= filmRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
 
@@ -101,7 +103,7 @@ public class FilmController {
     }
 
     @PatchMapping("/films/{id}")
-    public FilmOutput modifyFilm(@PathVariable Short id, @RequestBody FilmInput filmInput){
+    public FilmOutput modifyFilm(@PathVariable Short id, @Validated @RequestBody FilmInput filmInput){
         final var film= filmRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
 

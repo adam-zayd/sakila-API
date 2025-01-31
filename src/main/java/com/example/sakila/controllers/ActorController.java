@@ -6,7 +6,7 @@ import com.example.sakila.dto.output.ActorOutput;
 import com.example.sakila.entities.Actor;
 import com.example.sakila.repositories.ActorRepository;
 import com.example.sakila.repositories.FilmRepository;
-import com.example.sakila.services.ActorService;
+//import com.example.sakila.services.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -21,12 +21,12 @@ import java.util.ArrayList;
 
 @RestController
 public class ActorController {
-    private final ActorService actorService;
+    //private final ActorService actorService;
     private ActorRepository actorRepo;
     private FilmRepository filmRepo;
 
     @Autowired
-    public ActorController(ActorService actorService,ActorRepository actorRepo, FilmRepository filmRepo){
+    public ActorController(ActorRepository actorRepo, FilmRepository filmRepo){
         this.actorRepo= actorRepo;
         this.filmRepo= filmRepo;
     }
@@ -53,7 +53,7 @@ public class ActorController {
 //    }
 
     @PostMapping ("/actors")
-    public ActorOutput createActor(@Validated @RequestBody ActorInput actorInput){
+    public ActorOutput createActor(@Validated(ValidationGroup.Create.class) @RequestBody ActorInput actorInput){
         final var actor= new Actor();
         actor.setFirstName(actorInput.getFirstName().toUpperCase());
         actor.setLastName(actorInput.getLastName().toUpperCase());
@@ -70,7 +70,7 @@ public class ActorController {
     }
 
     @PutMapping("/actors/{id}")
-    public ActorOutput replaceActor(@PathVariable Short id, @Validated (ValidationGroup.Create.class) @RequestBody ActorInput actorInput){
+    public ActorOutput replaceActor(@PathVariable Short id, @Validated(ValidationGroup.Create.class) @RequestBody ActorInput actorInput){
         final var actor= actorRepo.findById(id)
                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
 
@@ -90,7 +90,7 @@ public class ActorController {
     }
     
     @PatchMapping("/actors/{id}")
-    public ActorOutput modifyActor(@PathVariable Short id, @RequestBody ActorInput actorInput){
+    public ActorOutput modifyActor(@PathVariable Short id, @Validated @RequestBody ActorInput actorInput){
         final var actor= actorRepo.findById(id)
                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
 
