@@ -47,16 +47,14 @@ public class ActorService {
                         .collect(Collectors.toCollection(ArrayList::new));
                 actor.setFilms(films);
         }
+        
+    public List<Actor> getAllActors(Optional<String> name) {
+        return name.map(actorRepo::findAllByFullNameContainingIgnoreCase)
+                .orElseGet(actorRepo::findAll);
+    }
 
-        public List<ActorOutput> getAllActors(Optional<String> name) {
-            return name.map(value -> actorRepo.findAllByFullNameContainingIgnoreCase(value))
-                    .orElseGet(() -> actorRepo.findAll())
-                    .stream()
-                    .map(ActorOutput::from)
-                    .toList();
-        }
 
-        public ActorOutput getActorByID(Short id) {
+    public ActorOutput getActorByID(Short id) {
             return actorRepo.findById(id)
                     .map(ActorOutput::from)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

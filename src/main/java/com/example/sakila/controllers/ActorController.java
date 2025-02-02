@@ -22,8 +22,11 @@ public class ActorController {
     }
 
     @GetMapping("/actors")
-    public List<ActorOutput> getAllActors(@RequestParam(required= false) Optional<String> name){
-        return actorService.getAllActors(name);  //MAY NOT WORK. MIGHT NEED .isPresent to check if name
+    public List<ActorOutput> getAllActors(@RequestParam(required = false) Optional<String> name) {
+        return actorService.getAllActors(name)
+                .stream()
+                .map(ActorOutput::from)
+                .toList();
     }
 
     @GetMapping("/actors/{id}")
