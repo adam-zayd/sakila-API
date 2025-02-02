@@ -30,9 +30,10 @@ public class ActorController {
     }
 
     @GetMapping("/actors/{id}")
-    public ActorOutput getActorUsingId(@PathVariable Short id){
-        return actorService.getActorByID(id);
+    public ActorOutput getActorUsingId(@PathVariable Short id) {
+        return ActorOutput.from(actorService.getActorByID(id));
     }
+
 
     @PostMapping ("/actors")
     public ActorOutput createActor(@Validated(ValidationGroup.Create.class) @RequestBody ActorInput actorInput){
