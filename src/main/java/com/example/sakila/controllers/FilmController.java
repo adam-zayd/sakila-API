@@ -10,6 +10,7 @@ import com.example.sakila.entities.Film;
 import com.example.sakila.repositories.ActorRepository;
 import com.example.sakila.repositories.FilmRepository;
 import com.example.sakila.repositories.LanguageRepository;
+import com.example.sakila.services.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -23,21 +24,31 @@ import java.util.stream.Collectors;
 
 @RestController
 public class FilmController {
-    private FilmRepository filmRepo;
-    private ActorRepository actorRepo;
+    private final FilmService filmService;
+    private final ActorRepository actorRepo;
+    private final FilmRepository filmRepo;
     private LanguageRepository languageRepo;
 
     @Autowired
-    public FilmController(FilmRepository filmRepo, ActorRepository actorRepo, LanguageRepository languageRepo){
+    public FilmController(FilmService filmService){
+        this.filmService= filmService;
         this.actorRepo= actorRepo;
         this.filmRepo= filmRepo;
         this.languageRepo= languageRepo;
     }
 
+//    @GetMapping("/films")
+//    public List<FilmOutput> getAllFilms(@RequestParam(required= false) Optional<String> title){
+//        return title.map(value -> filmRepo.findAllByTitleContainingIgnoreCase(value))
+//                .orElseGet(()->filmRepo.findAll())
+//                .stream()
+//                .map(FilmOutput::from)
+//                .toList();
+//    }
+
     @GetMapping("/films")
-    public List<FilmOutput> getAllFilms(@RequestParam(required= false) Optional<String> title){
-        return title.map(value -> filmRepo.findAllByTitleContainingIgnoreCase(value))
-                .orElseGet(()->filmRepo.findAll())
+    public List<FilmOutput> getAllFilms(@RequestParam(required = false) Optional<String> title) {
+        return filmService.getAllFilms(title)
                 .stream()
                 .map(FilmOutput::from)
                 .toList();
@@ -45,9 +56,7 @@ public class FilmController {
 
     @GetMapping("/films/{id}")
     public FilmOutput getFilmUsingID(@PathVariable Short id){
-        return  filmRepo.findById(id)
-                .map(FilmOutput::from)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return FilmOutput.from(filmService.getFilmByID(id));
     }
 
 
@@ -143,8 +152,6 @@ public class FilmController {
     @DeleteMapping("/films")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFilm(@RequestParam Short id){
-            final var film= filmRepo.findById(id)
-                                      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
-            filmRepo.delete(film);
+        filmService.deleteFilm(id);
         }
     }

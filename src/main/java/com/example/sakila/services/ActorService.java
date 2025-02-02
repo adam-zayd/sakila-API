@@ -1,6 +1,5 @@
 package com.example.sakila.services;
 
-import com.example.sakila.dto.output.ActorOutput;
 import com.example.sakila.entities.Actor;
 import com.example.sakila.repositories.ActorRepository;
 import com.example.sakila.repositories.FilmRepository;
