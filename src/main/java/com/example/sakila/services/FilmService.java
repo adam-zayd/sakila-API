@@ -32,6 +32,7 @@ public class FilmService {
         this.categoryRepo= categoryRepo;
     }
 
+    
     private void updateFromFilmInput(Film film, FilmInput filmInput) {
         if (filmInput.getTitle() != null) {
             film.setTitle(filmInput.getTitle().toUpperCase());
@@ -48,7 +49,13 @@ public class FilmService {
         if (filmInput.getRating()!=null){
             film.setRating(filmInput.getRating());
         }
+        else{
+            film.setRating("G");
+        }
         if (filmInput.getLanguage()!=null) {
+            if (filmInput.getLanguage().getId() == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Language ID cannot be null");
+            }
             final var language = languageRepo.findById(filmInput.getLanguage().getId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid language"));
             film.setLanguage(language);
