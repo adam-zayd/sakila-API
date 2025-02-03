@@ -18,6 +18,9 @@ public class FilmOutput{
     private Language language;
 
     private List<PartialActorOutput> actors;
+    private List<PartialCategoryOutput> categories;
+
+
 
     public static FilmOutput from(Film film){
         return new FilmOutput(
@@ -31,6 +34,11 @@ public class FilmOutput{
                 film.getCast()
                         .stream()
                         .map(PartialActorOutput::from)
-                        .toList());
+                        .toList(),
+                film.getCategories()
+                        .stream()
+                        .map(PartialCategoryOutput::from)
+                        .toList()
+        );
     }
 }

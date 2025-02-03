@@ -27,4 +27,6 @@ public class FilmInput {
     private Language language;
 
     private List<Short> cast;
+
+    private List<Byte> categories;
 }

@@ -13,4 +13,6 @@ public class CategoryInput {
     @Size(min= 1,max= 25, message= "The name must be between 1 and 25 characters")
     private String name;
 
+    private List<Short> films;
+
 }

@@ -32,7 +32,7 @@ public class Actor {
             joinColumns = {@JoinColumn(name="actor_id")},
             inverseJoinColumns= {@JoinColumn(name="film_id")}
     )
-    private List<Film> films=new ArrayList<>();
+    private List<Film> films;
 
     @Formula("concat(first_name, ' ', last_name)")
     @Setter(AccessLevel.NONE)
