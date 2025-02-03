@@ -61,7 +61,7 @@ public class FilmService {
                                 .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
                         .collect(Collectors.toCollection(ArrayList::new));
                 film.setCategories(categories);
-            
+
         }
         if (filmInput.getCast()!= null) {
                 final var cast = filmInput.getCast()
