@@ -54,7 +54,6 @@ public class FilmService {
             film.setLanguage(language);
         }
         if (filmInput.getCategories()!=null){
-            if (!filmInput.getCategories().isEmpty()){
                 final var categories = filmInput.getCategories()
                         .stream()
                         .map(categoryId -> categoryRepo
@@ -62,7 +61,7 @@ public class FilmService {
                                 .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
                         .collect(Collectors.toCollection(ArrayList::new));
                 film.setCategories(categories);
-            }
+            
         }
         if (filmInput.getCast()!= null) {
                 final var cast = filmInput.getCast()
@@ -98,7 +97,6 @@ public class FilmService {
         updateFromFilmInput(film, filmInput);
         return filmRepo.save(film);
     }
-    
 
     public void deleteFilm(Short id){
         final var film= filmRepo.findById(id)
