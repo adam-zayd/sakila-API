@@ -14,7 +14,7 @@ public class Category {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     @Column(name="category_id")
-    private Short categoryId;
+    private Byte categoryId;
 
     @Column(name="name")
     private String name;
