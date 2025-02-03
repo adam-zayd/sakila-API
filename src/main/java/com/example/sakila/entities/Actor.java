@@ -37,7 +37,4 @@ public class Actor {
     @Formula("concat(first_name, ' ', last_name)")
     @Setter(AccessLevel.NONE)
     private String fullName;
-
-
-
 }
