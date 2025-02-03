@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name="service")
 @Getter
 @Setter
-public class Service {
+public class Streaming {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)

@@ -9,7 +9,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class ServiceInput {
+public class StreamingInput {
         @NotNull(groups= {ValidationGroup.Create.class, ValidationGroup.Replace.class}, message= "You must enter a Name")
         @Size(min= 1,max= 45, message= "First name must be between 1 and 45 characters")
         private String name;
@@ -20,4 +20,7 @@ public class ServiceInput {
 
         @Digits(integer= 3,fraction= 2)
         private float cost;
+
+        @NotNull(groups= {ValidationGroup.Create.class, ValidationGroup.Replace.class}, message= "You must enter films, it can be an empty list.")
+        private List<Short> films;
     }
