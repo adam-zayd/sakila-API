@@ -17,5 +17,6 @@ public class ActorInput {
     @Size(min= 1,max= 45, message= "Last name must be between 1 and 45 characters")
     private String lastName;
 
+    @NotNull(groups= {Create.class, Replace.class}, message= "You must enter films, it can be an empty list.")
     private List<Short> films;
 }

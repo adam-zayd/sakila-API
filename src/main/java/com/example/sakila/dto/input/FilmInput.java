@@ -18,6 +18,7 @@ public class FilmInput {
     private String releaseYear;
 
     @Min(value= 1, message= "Film length must be at least 1")
+    @Max(value=65535, message= "Film length can not be more than 65535")
     private Short length;
 
     @Pattern(regexp= "^(G|PG|PG-13|R|NC-17)$", message= "Ratings must be one of: G/PG/PG-13/R/NC-17")
@@ -26,7 +27,9 @@ public class FilmInput {
     @NotNull(groups= {Create.class, Replace.class}, message= "You must enter a language ID")
     private Language language;
 
+    @NotNull(groups= {Create.class, Replace.class}, message= "You must enter a cast, it can be an empty list.")
     private List<Short> cast;
 
+    @NotNull(groups= {Create.class, Replace.class}, message= "You must enter categories, it can be an empty list.")
     private List<Byte> categories;
 }

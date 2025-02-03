@@ -65,7 +65,6 @@ public class FilmService {
             }
         }
         if (filmInput.getCast()!= null) {
-            if (!filmInput.getCast().isEmpty()) {
                 final var cast = filmInput.getCast()
                         .stream()
                         .map(actorId -> actorRepo
@@ -73,7 +72,7 @@ public class FilmService {
                                 .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
                         .collect(Collectors.toCollection(ArrayList::new));
                 film.setCast(cast);
-            }
+
         }
     }
 

@@ -33,18 +33,15 @@ public class ActorService {
             if (actorInput.getLastName()!= null) {
                 actor.setLastName(actorInput.getLastName().toUpperCase());
             }
-            if (actorInput.getFilms()== null) {
-                return;
+            if (actorInput.getFilms()!= null) {
+                    final var films = actorInput.getFilms()
+                            .stream()
+                            .map(filmId -> filmRepo.findById(filmId)
+                                    .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
+                            .collect(Collectors.toCollection(ArrayList::new));
+                    actor.setFilms(films);
+
             }
-            if (actorInput.getFilms().isEmpty()) {
-                return;
-            }
-                final var films = actorInput.getFilms()
-                        .stream()
-                        .map(filmId -> filmRepo.findById(filmId)
-                                .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
-                        .collect(Collectors.toCollection(ArrayList::new));
-                actor.setFilms(films);
         }
 
     public List<Actor> getAllActors(Optional<String> name){
