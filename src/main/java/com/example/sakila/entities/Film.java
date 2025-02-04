@@ -53,5 +53,11 @@ public class Film {
     )
     private List<Category> categories;
 
-
+    @ManyToMany
+    @JoinTable(
+            name="film_service",
+            joinColumns = {@JoinColumn(name="film_id")},
+            inverseJoinColumns= {@JoinColumn(name="service_id")}
+    )
+    private List<Streaming> streams;
 }

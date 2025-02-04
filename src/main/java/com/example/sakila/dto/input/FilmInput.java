@@ -34,4 +34,9 @@ public class FilmInput {
 
     @NotNull(groups= {Create.class, Replace.class}, message= "You must enter categories, it can be an empty list.")
     private List<Byte> categories;
+
+    @NotNull(groups= {Create.class, Replace.class}, message= "You must enter categories, it can be an empty list.")
+    private List<Short> streams;
+
+
 }

@@ -19,7 +19,7 @@ public class StreamingInput {
         private String website;
 
         @Digits(integer= 3,fraction= 2)
-        private float cost;
+        private Float cost;
 
         @NotNull(groups= {ValidationGroup.Create.class, ValidationGroup.Replace.class}, message= "You must enter films, it can be an empty list.")
         private List<Short> films;

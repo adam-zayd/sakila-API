@@ -1,10 +1,7 @@
 package com.example.sakila.services;
 
 import com.example.sakila.entities.Film;
-import com.example.sakila.repositories.ActorRepository;
-import com.example.sakila.repositories.CategoryRepository;
-import com.example.sakila.repositories.FilmRepository;
-import com.example.sakila.repositories.LanguageRepository;
+import com.example.sakila.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,13 +20,15 @@ public class FilmService {
     private final FilmRepository filmRepo;
     private final LanguageRepository languageRepo;
     private final CategoryRepository categoryRepo;
+    private final StreamingRepository streamingRepo;
 
     @Autowired
-    public FilmService(ActorRepository actorRepo, FilmRepository filmRepo, LanguageRepository languageRepo, CategoryRepository categoryRepo) {
+    public FilmService(ActorRepository actorRepo, FilmRepository filmRepo, LanguageRepository languageRepo, CategoryRepository categoryRepo, StreamingRepository streamingRepo) {
         this.actorRepo= actorRepo;
         this.filmRepo= filmRepo;
         this.languageRepo= languageRepo;
         this.categoryRepo= categoryRepo;
+        this.streamingRepo= streamingRepo;
     }
 
     private void updateFromFilmInput(Film film, FilmInput filmInput) {
@@ -42,16 +41,15 @@ public class FilmService {
         if (filmInput.getReleaseYear() != null) {
             film.setReleaseYear(filmInput.getReleaseYear());
         }
-        if (filmInput.getLength() != null){
+        if (filmInput.getLength() != null) {
             film.setLength(filmInput.getLength());
         }
-        if (filmInput.getRating()!=null){
+        if (filmInput.getRating() != null) {
             film.setRating(filmInput.getRating());
-        }
-        else{
+        } else {
             film.setRating("G");
         }
-        if (filmInput.getLanguage()!=null) {
+        if (filmInput.getLanguage() != null) {
             if (filmInput.getLanguage().getId() == null) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Language ID cannot be null");
             }
@@ -59,28 +57,35 @@ public class FilmService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid language"));
             film.setLanguage(language);
         }
-        if (filmInput.getCategories()!=null){
-                final var categories = filmInput.getCategories()
-                        .stream()
-                        .map(categoryId -> categoryRepo
-                                .findById(categoryId)
-                                .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
-                        .collect(Collectors.toCollection(ArrayList::new));
-                film.setCategories(categories);
+        if (filmInput.getCategories() != null) {
+            final var categories = filmInput.getCategories()
+                    .stream()
+                    .map(categoryId -> categoryRepo
+                            .findById(categoryId)
+                            .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            film.setCategories(categories);
 
         }
-        if (filmInput.getCast()!= null) {
-                final var cast = filmInput.getCast()
-                        .stream()
-                        .map(actorId -> actorRepo
-                                .findById(actorId)
-                                .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
-                        .collect(Collectors.toCollection(ArrayList::new));
-                film.setCast(cast);
-
+        if (filmInput.getCast() != null) {
+            final var cast = filmInput.getCast()
+                    .stream()
+                    .map(actorId -> actorRepo
+                            .findById(actorId)
+                            .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            film.setCast(cast);
+        }
+        if (filmInput.getStreams() != null) {
+            final var streams = filmInput.getStreams()
+                    .stream()
+                    .map(serviceId -> streamingRepo
+                            .findById(serviceId)
+                            .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            film.setStreams(streams);
         }
     }
-
     public List<Film> getAllFilms(Optional<String> title) {
         return title.map(filmRepo::findAllByTitleContainingIgnoreCase)
                 .orElseGet(filmRepo::findAll);
@@ -109,5 +114,4 @@ public class FilmService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found"));
         filmRepo.delete(film);
     }
-
 }

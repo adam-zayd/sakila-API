@@ -19,6 +19,7 @@ public class FilmOutput{
 
     private List<PartialActorOutput> actors;
     private List<PartialCategoryOutput> categories;
+    private List<PartialStreamingOutput> streams;
 
 
 
@@ -36,6 +37,10 @@ public class FilmOutput{
                         .map(PartialActorOutput::from)
                         .toList(),
                 film.getCategories()
+                        .stream()
+                        .map(PartialCategoryOutput::from)
+                        .toList(),
+                film.getStreams()
                         .stream()
                         .map(PartialCategoryOutput::from)
                         .toList()
