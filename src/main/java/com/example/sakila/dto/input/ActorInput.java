@@ -4,10 +4,12 @@ import static com.example.sakila.dto.ValidationGroup.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
+@Setter
 public class ActorInput {
     @NotNull(groups= {Create.class, Replace.class}, message= "You must enter a First Name")
     @Size(min= 1,max= 45, message= "First name must be between 1 and 45 characters")
