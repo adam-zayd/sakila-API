@@ -42,7 +42,7 @@ public class FilmOutput{
                         .toList(),
                 film.getStreams()
                         .stream()
-                        .map(PartialCategoryOutput::from)
+                        .map(PartialStreamingOutput::from)
                         .toList()
         );
     }

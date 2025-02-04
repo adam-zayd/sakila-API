@@ -14,7 +14,7 @@ public class StreamingInput {
         @Size(min= 1,max= 45, message= "First name must be between 1 and 45 characters")
         private String name;
 
-        @NotNull (groups= {ValidationGroup.Create.class, ValidationGroup.Replace.class}, message= "You must enter a Last Name")
+        @NotNull (groups= {ValidationGroup.Create.class, ValidationGroup.Replace.class}, message= "You must enter a Wesbite domain")
         @Size(min= 1,max= 255, message= "Last name must be between 1 and 255 characters")
         private String website;
 
