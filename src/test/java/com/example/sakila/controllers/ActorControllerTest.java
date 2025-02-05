@@ -231,7 +231,6 @@ public class ActorControllerTest{
         when(actorService.createActor(invalidActorInput))
                 .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
 
-        //Throws lava lang null pointer exception????????
         ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> actorController.createActor(invalidActorInput));
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
     }
@@ -255,6 +254,19 @@ public class ActorControllerTest{
         Assertions.assertEquals("John", actor.getFirstName());
         Assertions.assertEquals("Smith", actor.getLastName());
         Assertions.assertEquals(0, actor.getFilms().size());
+    }
+
+    @Test
+    public void testReplaceActorNotFound(){
+        actorInput.setFirstName("John");
+        actorInput.setLastName("Smith");
+        actorInput.setFilms(new ArrayList<Short>());
+
+        when(actorService.updateActor(id,actorInput))
+                .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
+
+        ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> actorController.replaceActor(id,actorInput));
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
     }
 
 //
@@ -312,11 +324,159 @@ public class ActorControllerTest{
         when(actorService.updateActor(id,invalidActorInput))
                 .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
 
-        //Throws lava lang null pointer exception????????
         ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> actorController.replaceActor(id,invalidActorInput));
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
     }
 
+    @Test
+    public void testModifyActorWithAll(){
+        actorInput.setFirstName("John");
+        actorInput.setLastName("Smith");
+        actorInput.setFilms(new ArrayList<Short>());
 
+        actor.setFirstName("John");
+        actor.setLastName("Smith");
+        actor.setFilms(new ArrayList<Film>());
 
+        when(actorService.updateActor(id,actorInput))
+                .thenReturn(actor);
+
+        ActorOutput created= actorController.modifyActor(id, actorInput);
+
+        Assertions.assertNotNull(created);
+        Assertions.assertEquals("John", actor.getFirstName());
+        Assertions.assertEquals("Smith", actor.getLastName());
+        Assertions.assertEquals(0, actor.getFilms().size());
+    }
+
+    @Test
+    public void testModifyActorNotFound(){
+        actorInput.setFirstName("John");
+        actorInput.setLastName("Smith");
+        actorInput.setFilms(new ArrayList<Short>());
+
+        when(actorService.updateActor(id,actorInput))
+                .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"));
+
+        ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> actorController.modifyActor(id,actorInput));
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    }
+
+    @Test
+    public void testModifyActorWithoutFirstName(){
+        actorInput.setLastName("Smith");
+        actorInput.setFilms(new ArrayList<Short>());
+
+        actor.setFirstName("John");
+        actor.setLastName("Smith");
+        actor.setFilms(new ArrayList<Film>());
+
+        when(actorService.updateActor(id,actorInput))
+                .thenReturn(actor);
+
+        ActorOutput created= actorController.modifyActor(id, actorInput);
+
+        Assertions.assertNotNull(created);
+        Assertions.assertEquals("Smith", actor.getLastName());
+        Assertions.assertEquals(0, actor.getFilms().size());
+    }
+
+    @Test
+    public void testModifyActorWithoutLastName(){
+        actorInput.setFirstName("John");
+        actorInput.setFilms(new ArrayList<Short>());
+
+        actor.setFirstName("John");
+        actor.setLastName("Smith");
+        actor.setFilms(new ArrayList<Film>());
+
+        when(actorService.updateActor(id,actorInput))
+                .thenReturn(actor);
+
+        ActorOutput created= actorController.modifyActor(id, actorInput);
+
+        Assertions.assertNotNull(created);
+        Assertions.assertEquals("John", actor.getFirstName());
+        Assertions.assertEquals(0, actor.getFilms().size());
+    }
+
+    @Test
+    public void testModifyActorWithoutFilms(){
+        actorInput.setFirstName("John");
+        actorInput.setLastName("Smith");
+
+        actor.setFirstName("John");
+        actor.setLastName("Smith");
+        actor.setFilms(new ArrayList<Film>());
+
+        when(actorService.updateActor(id,actorInput))
+                .thenReturn(actor);
+
+        ActorOutput created= actorController.modifyActor(id, actorInput);
+
+        Assertions.assertNotNull(created);
+        Assertions.assertEquals("John", actor.getFirstName());
+        Assertions.assertEquals("Smith", actor.getLastName());
+    }
+
+//    @Test
+//    public void testModifyActorWithEmptyName(){
+//        invalidActorInput.setFirstName("");
+//
+//        //Throws lava lang null pointer exception????????
+//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.modifyActor(id, invalidActorInput));
+//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+//    }
+//
+//    @Test
+//    public void testModifyActorWithLongName(){
+//        invalidActorInput.setFirstName("1234567890123456789012345678901234567890123456");
+//
+//        //Throws lava lang null pointer exception????????
+//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.modifyActor(id, invalidActorInput));
+//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+//    }
+//
+//    @Test
+//    public void testModifyActorWithNullFilms(){
+//        invalidActorInput.setFilms(null);
+//
+//        //Throws lava lang null pointer exception????????
+//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.modifyActor(id, invalidActorInput));
+//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+//    }
+
+    @Test
+    public void testModifyActorWithInvalidFilms(){
+        ArrayList films= new ArrayList<Short>();
+        films.add(5000000);
+        invalidActorInput.setFilms(films);
+
+        when(actorService.updateActor(id,invalidActorInput))
+                .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> actorController.modifyActor(id,invalidActorInput));
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+    }
+
+    @Test
+    public void testDeleteActor(){
+        actor.setFirstName("John");
+        actor.setLastName("Smith");
+        actor.setFilms(new ArrayList<>());
+        doNothing()
+                .when(actorService).deleteActor(id);
+
+        Assertions.assertDoesNotThrow(() -> actorController.deleteActor(id));
+    }
+
+    @Test
+    public void testDeleteActorNotFound() {
+        doThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor not found"))
+                .when(actorService).deleteActor(id);
+
+        ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> actorController.deleteActor(id));
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    }
 }

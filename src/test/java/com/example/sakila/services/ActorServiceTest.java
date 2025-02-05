@@ -1,6 +1,7 @@
 package com.example.sakila.services;
 
 import com.example.sakila.entities.Actor;
+import com.example.sakila.entities.Film;
 import com.example.sakila.repositories.ActorRepository;
 import com.example.sakila.repositories.FilmRepository;
 import com.example.sakila.dto.input.ActorInput;
@@ -189,7 +190,17 @@ public class ActorServiceTest{
     }
 
     @Test
-    public void testDeleteActor_NotFound() {
+    public void testDeleteActor(){
+        when(actorRepo.findById(id))
+                .thenReturn(Optional.of(actor));
+
+        actorService.deleteActor(id);
+
+        verify(actorRepo, times(1)).delete(actor);
+    }
+
+    @Test
+    public void testDeleteActorNotFound() {
         when(actorRepo.findById(id)).
                 thenReturn(Optional.empty());
 
