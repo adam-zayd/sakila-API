@@ -50,8 +50,8 @@ public class ActorController {
         return ActorOutput.from(actorService.updateActor(id, actorInput));
     }
 
-    @DeleteMapping("/actors")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/actors")
     public void deleteActor(@RequestParam Short id){
         actorService.deleteActor(id);
     }

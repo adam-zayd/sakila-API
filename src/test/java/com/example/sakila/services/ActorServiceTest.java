@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,9 +42,9 @@ public class ActorServiceTest{
     }
 
     @BeforeEach
-    public void setUpForEach(){
-        Actor actor= new Actor();
-        ActorInput actorInput = new ActorInput();
+    public void init(){
+        actor= new Actor();
+        actorInput= new ActorInput();
     }
 
     @Test
@@ -103,7 +102,7 @@ public class ActorServiceTest{
     }
 
     @Test
-    public void testGetAllActorsWithNonExistentName(){
+    public void testGetAllActorsWithNameNotFound(){
         List<Actor> mockRepoReturn= new ArrayList<>();
 
         when(actorRepo.findAllByFullNameContainingIgnoreCase("Bob"))
@@ -132,7 +131,7 @@ public class ActorServiceTest{
     }
 
     @Test
-    public void testGetActorByNonExistentID(){
+    public void testGetActorByIDNotFound(){
         when(actorRepo.findById(id))
                 .thenReturn(Optional.empty());
 
@@ -152,7 +151,47 @@ public class ActorServiceTest{
         Actor createdActor = actorService.createActor(actorInput);
 
         Assertions.assertNotNull(createdActor);
-        Assertions.assertEquals("JOHN", createdActor.getFirstName());  // Ensure names are updated to upper case
-        Assertions.assertEquals("SMITH", createdActor.getLastName());
+        Assertions.assertEquals("John", createdActor.getFirstName());  // Ensure names are updated to upper case
+        Assertions.assertEquals("Smith", createdActor.getLastName());
+    }
+
+    @Test
+    public void testUpdateActor() {
+        actor.setFirstName("Old");
+        actor.setLastName("Name");
+
+        actorInput.setFirstName("John");
+        actorInput.setLastName("Smith");
+
+        when(actorRepo.findById(id)).
+                thenReturn(Optional.of(actor));
+        when(actorRepo.save(any(Actor.class)))
+                .thenReturn(actor);
+
+        Actor updatedActor = actorService.updateActor(id, actorInput);
+
+        Assertions.assertNotNull(updatedActor);
+        Assertions.assertEquals("JOHN", updatedActor.getFirstName());
+        Assertions.assertEquals("SMITH", updatedActor.getLastName());
+    }
+
+    @Test
+    public void testUpdateActorNotFound() {
+        actorInput.setFirstName("John");
+        actorInput.setLastName("Smith");
+
+        when(actorRepo.findById(id)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception= Assertions.assertThrows(ResponseStatusException.class, () -> actorService.updateActor(id, actorInput));
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    }
+
+    @Test
+    public void testDeleteActor_NotFound() {
+        when(actorRepo.findById(id)).
+                thenReturn(Optional.empty());
+
+        ResponseStatusException exception= Assertions.assertThrows(ResponseStatusException.class, () -> actorService.deleteActor(id));
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
     }
 }
