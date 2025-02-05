@@ -46,7 +46,7 @@ public class ActorController {
     }
     
     @PatchMapping("/actors/{id}")
-    public ActorOutput modifyActor(@PathVariable Short id, @Validated(Update.class) @RequestBody ActorInput actorInput){
+    public ActorOutput modifyActor(@PathVariable Short id, @Validated(ValidationGroup.Update.class) @RequestBody ActorInput actorInput){
         return ActorOutput.from(actorService.updateActor(id, actorInput));
     }
 

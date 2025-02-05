@@ -3,11 +3,8 @@ package com.example.sakila.controllers;
 import com.example.sakila.dto.output.ActorOutput;
 import com.example.sakila.entities.Actor;
 import com.example.sakila.entities.Film;
-import com.example.sakila.repositories.ActorRepository;
-import com.example.sakila.repositories.FilmRepository;
 import com.example.sakila.dto.input.ActorInput;
 import com.example.sakila.services.ActorService;
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -176,49 +173,6 @@ public class ActorControllerTest{
         Assertions.assertEquals("Smith", actor.getLastName());
         Assertions.assertEquals(0, actor.getFilms().size());
     }
-//
-//    @Test
-//    public void testCreateActorWithNullName(){
-//        invalidActorInput.setLastName("Smith");
-//        invalidActorInput.setFilms(new ArrayList<Short>());
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.createActor(invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
-//
-//    @Test
-//    public void testCreateActorWithEmptyName(){
-//        invalidActorInput.setFirstName("");
-//        invalidActorInput.setLastName("Smith");
-//        invalidActorInput.setFilms(new ArrayList<Short>());
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.createActor(invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
-//
-//    @Test
-//    public void testCreateActorWithLongName(){
-//        invalidActorInput.setFirstName("1234567890123456789012345678901234567890123456");
-//        invalidActorInput.setLastName("Smith");
-//        invalidActorInput.setFilms(new ArrayList<Short>());
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.createActor(invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
-
-//    @Test
-//    public void testCreateActorWithNullFilms(){
-//        invalidActorInput.setFirstName("John");
-//        invalidActorInput.setLastName("Smith");
-//        invalidActorInput.setFilms(null);
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.createActor(invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
 
     @Test
     public void testCreateActorWithInvalidFilms(){
@@ -268,50 +222,6 @@ public class ActorControllerTest{
         ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> actorController.replaceActor(id,actorInput));
         Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
     }
-
-//
-//    @Test
-//    public void testReplaceActorWithNullName(){
-//        invalidActorInput.setLastName("Smith");
-//        invalidActorInput.setFilms(new ArrayList<Short>());
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.replaceActor(id,invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
-//
-//    @Test
-//    public void testReplaceActorWithEmptyName(){
-//        invalidActorInput.setFirstName("");
-//        invalidActorInput.setLastName("Smith");
-//        invalidActorInput.setFilms(new ArrayList<Short>());
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.replaceActor(id, invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
-//
-//    @Test
-//    public void testReplaceActorWithLongName(){
-//        invalidActorInput.setFirstName("1234567890123456789012345678901234567890123456");
-//        invalidActorInput.setLastName("Smith");
-//        invalidActorInput.setFilms(new ArrayList<Short>());
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.replaceActor(id, invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
-//
-//    @Test
-//    public void testReplaceActorWithNullFilms(){
-//        invalidActorInput.setFirstName("John");
-//        invalidActorInput.setLastName("Smith");
-//        invalidActorInput.setFilms(null);
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.replaceActor(id, invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
 
     @Test
     public void testReplaceActorWithInvalidFilms(){
@@ -418,33 +328,6 @@ public class ActorControllerTest{
         Assertions.assertEquals("John", actor.getFirstName());
         Assertions.assertEquals("Smith", actor.getLastName());
     }
-
-//    @Test
-//    public void testModifyActorWithEmptyName(){
-//        invalidActorInput.setFirstName("");
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.modifyActor(id, invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
-//
-//    @Test
-//    public void testModifyActorWithLongName(){
-//        invalidActorInput.setFirstName("1234567890123456789012345678901234567890123456");
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.modifyActor(id, invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
-//
-//    @Test
-//    public void testModifyActorWithNullFilms(){
-//        invalidActorInput.setFilms(null);
-//
-//        //Throws lava lang null pointer exception????????
-//        MethodArgumentNotValidException exception = Assertions.assertThrows(MethodArgumentNotValidException.class, () -> actorController.modifyActor(id, invalidActorInput));
-//        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-//    }
 
     @Test
     public void testModifyActorWithInvalidFilms(){
