@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -88,10 +89,10 @@ public class ActorServiceTest{
         mockRepoReturn.add(actor);
         mockRepoReturn.add(secondActor);
 
-        when(actorRepo.findAllByFullNameContainingIgnoreCase(""))
+        when(actorRepo.findAll())
                 .thenReturn(mockRepoReturn);
 
-        List<Actor> actors = actorService.getAllActors(Optional.of(""));
+        List<Actor> actors = actorService.getAllActors(Optional.empty());
 
         Assertions.assertNotNull(actors);
         Assertions.assertEquals(2, actors.size());
@@ -165,8 +166,9 @@ public class ActorServiceTest{
 
         when(actorRepo.findById(id)).
                 thenReturn(Optional.of(actor));
+
         when(actorRepo.save(any(Actor.class)))
-                .thenReturn(actor);
+                .then(returnsFirstArg());
 
         Actor updatedActor = actorService.updateActor(id, actorInput);
 
