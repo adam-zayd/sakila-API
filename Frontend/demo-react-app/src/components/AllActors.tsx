@@ -1,6 +1,6 @@
 
 import {useState, useEffect} from "react";
-import {Actor} from "./ActorCard";
+import {Actor} from "./PartialActorCard";
 
 
 export default function AllActors(){
@@ -18,7 +18,6 @@ export default function AllActors(){
             <ul>
                 {actors.map(actor => (<li key= {actor.id}>
                         <h2>{actor.fullName}</h2>
-                        <ul>Films cast in: {actor.films.length>0? actor.films.map(film => <li>{film.title}</li>) : "Unknown"}</ul>
                     </li>
                 ))}
             </ul>

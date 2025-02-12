@@ -1,6 +1,6 @@
 
 import {useState, useEffect} from "react";
-import {Category} from "./CategoryCard";
+import {Category} from "./PartialCategoryCard";
 
 
 export default function AllCategories(){
@@ -18,7 +18,6 @@ export default function AllCategories(){
             <ul>
                 {categories.map(category => (<li key= {category.id}>
                         <h2>{category.name}</h2>
-                        <ul>Films: {category.films.length>0? category.films.map(film => <li>{film.title}</li>) : "Unknown"}</ul>
                     </li>
                 ))}
             </ul>
