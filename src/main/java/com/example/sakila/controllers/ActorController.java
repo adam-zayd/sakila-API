@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import static com.example.sakila.dto.ValidationGroup.Update;
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin
 @RestController
 public class ActorController {
     private final ActorService actorService;

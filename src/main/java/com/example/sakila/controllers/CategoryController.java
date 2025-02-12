@@ -12,6 +12,7 @@ import static com.example.sakila.dto.ValidationGroup.Update;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 public class CategoryController {
     private final CategoryService categoryService;

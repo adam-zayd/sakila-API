@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import static com.example.sakila.dto.ValidationGroup.Update;
 
+@CrossOrigin
 @RestController
 public class StreamingController {
     private final StreamingService streamingService;
