@@ -2,7 +2,7 @@
 import {useState, useEffect} from "react";
 import {Streaming} from "./PartialStreamingCard";
 import { Link } from "react-router";
-
+import "./AllDisplay.css";
 
 export default function AllStreams(){
     const [streams, setStreams]= useState<Streaming[]>([]);
@@ -15,15 +15,15 @@ export default function AllStreams(){
 
     return (
         <div>
-            <h3>All Streams</h3>
-            <ul>
-                {streams.map(streaming => (<li key= {streaming.id}>
-                        <h2>
-                            <Link to={`/streams/${streaming.id}`}>{streaming.name}</Link>
-                        </h2>
+            <h1 className="pageTitle">All Streams</h1>
+            <article className= "allStreams">
+                {streams.map(streaming => (<li className="individuals" key= {streaming.id}>
+                        <h3>
+                            <Link className="name" to={`/streams/${streaming.id}`}>{streaming.name}</Link>
+                        </h3>
                     </li>
                 ))}
-            </ul>
+            </article>
         </div>
     );
 }

@@ -2,7 +2,7 @@
 import {useState, useEffect} from "react";
 import {Category} from "./PartialCategoryCard";
 import { Link } from "react-router";
-
+import "./AllDisplay.css";
 
 export default function AllCategories(){
     const [categories, setCategories]= useState<Category[]>([]);
@@ -14,16 +14,16 @@ export default function AllCategories(){
     }, []);
 
     return (
-        <div>
-            <h3>All Categories</h3>
-            <ul>
-                {categories.map(category => (<li key= {category.id}>
-                        <h2>
-                            <Link to={`/categories/${category.id}`}>{category.name}</Link>
-                        </h2>
+        <div className= "container">
+            <h1 className="pageTitle">All Categories</h1>
+            <article className= "allCategories">
+                {categories.map(category => (<li className="individuals" key= {category.id}>
+                        <h3>
+                            <Link className="name" to={`/categories/${category.id}`}>{category.name}</Link>
+                        </h3>
                     </li>
                 ))}
-            </ul>
+            </article>
         </div>
     );
 }

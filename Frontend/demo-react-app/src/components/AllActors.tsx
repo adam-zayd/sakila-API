@@ -2,7 +2,7 @@
 import {useState, useEffect} from "react";
 import {Actor} from "./PartialActorCard";
 import { Link } from "react-router";
-
+import "./AllDisplay.css";
 
 export default function AllActors(){
     const [actors, setActors]= useState<Actor[]>([]);
@@ -15,15 +15,15 @@ export default function AllActors(){
 
     return (
         <div>
-            <h3>All Actors</h3>
-            <ul>
-                {actors.map(actor => (<li key= {actor.id}>
-                        <h2>
-                            <Link to={`/actors/${actor.id}`}>{actor.fullName}</Link>
-                        </h2>
+            <h1 className="pageTitle">All Actors</h1>
+            <article className= "allActors">
+                {actors.map(actor => (<li className="individuals" key= {actor.id}>
+                        <h3>
+                            <Link className="name" to={`/actors/${actor.id}`}>{actor.fullName}</Link>
+                        </h3>
                     </li>
                 ))}
-            </ul>
+            </article>
         </div>
     );
 }

@@ -1,17 +1,51 @@
+
 .allMovies{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
     gap: 20px;
     padding: 20px;
-    background: #1a1a1a;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgb(253, 253, 253);
-    width: 40%;
+    width: 80%;
     margin: 40px auto;
-    color: white;
+    justify-content: center;
 }
 
- .outer {
+.allCategories{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+    margin: 40px auto;
+    justify-content: center;
+}
+
+.allActors{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+    margin: 40px auto;
+    justify-content: center;
+}
+
+.allStreams{
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    padding: 20px;
+    width: 80%;
+    margin: 40px auto;
+    justify-content: center;
+}
+
+.allStreams .individuals {
+    width: 160px; 
+    padding: 30px 20px;
+    font-size: 1.1rem; 
+}
+
+ .individuals {
     list-style: none;
     background: #0d0d0d;
     padding: 15px 10px;
@@ -19,18 +53,27 @@
     text-align: center;
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: flex; 
+    flex-direction: column;
+    box-shadow: 0 8px 10px rgba(255, 0, 0, 0.5);
+    border: 1.3px solid rgba(255, 0, 0, 0.682);
 }
 
- li:hover {
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
-    background: rgb(24, 23, 23);
+.individuals:hover {
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.582);
+    border: 3px solid rgba(255, 255, 255, 0.74);
 }
 
- .movieTitle{
+ .name{
     margin-bottom: 10px;
     font-size: 18px;
     color:rgb(255, 255, 255);
 }
+
+.name:hover {
+    color: #ff0000;
+}
+
 
  a {
     text-decoration: none;
@@ -52,22 +95,35 @@
     text-align: center;
 }
 
-.movieCat:hover .movieCatText {
+.attributeItem:hover .attributeText {
     color: white;
 }
 
-.movieCat .movieCatText:hover{
+.attributeItem .attributeText:hover {
     color: #ff0000;
 }
 
-.movieStream:hover .movieStreamText {
-    color: white;
+.attributeItem:hover {
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.582);
+    background: rgb(23, 24, 24);
 }
 
-.movieStream .movieStreamText:hover{
-    color: #ff0000;
+.pageTitle {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #ffffff; 
+    text-transform: uppercase;
+    margin: 30px 0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.822);
+    letter-spacing: 2px;
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
+    border: 2px solid rgba(255, 0, 0, 0.682);
+    transition: all 0.3s ease-in-out;
 }
-
-.movieTitle:hover {
-    color: #ff0000;
+body{
+    padding-top: 80px;
 }
