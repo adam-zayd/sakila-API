@@ -1,24 +1,39 @@
-
 import {useState, useEffect} from "react";
+import { useParams } from "react-router";
 import {Actor} from "./ActorCard";
 
-
 export default function SpecificActor(){
-    const [actor, setActor]= useState<Actor|null>(null);
+    const {id} = useParams();
+    const [actor, setActor] = useState<Actor|null> (null);
+    const [error, setError] = useState<Error|null> (null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const id: number = 1;
+        setLoading(true);
         fetch(`http://localhost:8080/actors/${id}`)
         .then(response => {
             if (response.ok){
-            return response.json();
+                return response.json();
             }
-            throw new Error("Actor not found");
+            throw new Error(`ERROR: ${response.status}`);
         })
-        .then(data => setActor(data))
-        .catch(_error => setActor(null));
-}, []);
+        .then(setActor)
+        .catch(setError)
+        .finally(() => setLoading(false));
+}, [id]);
 
+    if(loading){
+        return <h1>Loading...</h1>
+    }
+
+    if(error){
+        return <h1>{error.message}</h1>
+    }
+
+    if(!actor){
+        return <h1>Actor failed to load</h1>
+    }
+    
     return(
         <div>
             {actor?(

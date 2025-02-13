@@ -1,23 +1,38 @@
-
 import {useState, useEffect} from "react";
+import { useParams } from "react-router";
 import {Streaming} from "./StreamingCard";
 
-
 export default function SpecificStreaming(){
-    const [streaming, setStreaming]= useState<Streaming|null>(null);
+    const {id} = useParams();
+    const [streaming, setStreaming] = useState<Streaming|null> (null);
+    const [error, setError] = useState<Error|null> (null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const id: number = 1;
+        setLoading(true);
         fetch(`http://localhost:8080/streams/${id}`)
         .then(response => {
             if (response.ok){
-            return response.json();
+                return response.json();
             }
-            throw new Error("Stream not found");
+            throw new Error(`ERROR: ${response.status}`);
         })
-        .then(data => setStreaming(data))
-        .catch(_error => setStreaming(null));
-}, []);
+        .then(setStreaming)
+        .catch(setError)
+        .finally(() => setLoading(false));
+}, [id]);
+
+    if(loading){
+        return <h1>Loading...</h1>
+    }
+
+    if(error){
+        return <h1>{error.message}</h1>
+    }
+
+    if(!streaming){
+        return <h1>Streaming failed to load</h1>
+    }
 
     return(
         <div>

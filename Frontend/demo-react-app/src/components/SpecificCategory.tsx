@@ -1,23 +1,38 @@
-
 import {useState, useEffect} from "react";
+import { useParams } from "react-router";
 import {Category} from "./CategoryCard";
 
-
 export default function SpecificCategory(){
-    const [category, setCategory]= useState<Category|null>(null);
+    const {id} = useParams();
+    const [category, setCategory] = useState<Category|null> (null);
+    const [error, setError] = useState<Error|null> (null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const id: number = 0;
+        setLoading(true);
         fetch(`http://localhost:8080/categories/${id}`)
         .then(response => {
             if (response.ok){
-            return response.json();
+                return response.json();
             }
-            throw new Error("Category not found");
+            throw new Error(`ERROR: ${response.status}`);
         })
-        .then(data => setCategory(data))
-        .catch(_error => setCategory(null));
-}, []);
+        .then(setCategory)
+        .catch(setError)
+        .finally(() => setLoading(false));
+}, [id]);
+
+    if(loading){
+        return <h1>Loading...</h1>
+    }
+
+    if(error){
+        return <h1>{error.message}</h1>
+    }
+
+    if(!category){
+        return <h1>Category failed to load</h1>
+    }
 
     return(
         <div>

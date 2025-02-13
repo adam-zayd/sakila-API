@@ -1,6 +1,7 @@
 
 import {useState, useEffect} from "react";
 import {Category} from "./PartialCategoryCard";
+import { Link } from "react-router";
 
 
 export default function AllCategories(){
@@ -17,7 +18,9 @@ export default function AllCategories(){
             <h3>All Categories</h3>
             <ul>
                 {categories.map(category => (<li key= {category.id}>
-                        <h2>{category.name}</h2>
+                        <h2>
+                            <Link to={`/categories/${category.id}`}>{category.name}</Link>
+                        </h2>
                     </li>
                 ))}
             </ul>
