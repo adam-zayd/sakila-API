@@ -21,7 +21,6 @@ export default function AllStreams(){
                         <h2>
                             <Link to={`/streams/${streaming.id}`}>{streaming.name}</Link>
                         </h2>
-                        <p>Website: {streaming.website}</p><p>Cost per month: {streaming.cost}</p>
                     </li>
                 ))}
             </ul>

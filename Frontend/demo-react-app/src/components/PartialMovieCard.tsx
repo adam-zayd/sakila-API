@@ -1,8 +1,4 @@
 
-export interface Language {
-    id: number;
-    name: string;
-}
 
 export interface Category {
     categoryId: number;
@@ -17,7 +13,6 @@ export interface Stream {
 export interface Movie {
     id: number; 
     title: string;
-    language: Language;
     categories: Category[];
     streams: Stream[];
 }
