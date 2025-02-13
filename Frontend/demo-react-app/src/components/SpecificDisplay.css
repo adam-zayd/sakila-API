@@ -1,0 +1,90 @@
+.specificMovieContainer {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(255, 0, 0, 0.5);
+    color: #fff;
+}
+
+.specificPageTitle{
+    margin-top: 20px;
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #ff0000; 
+    text-transform: uppercase;
+    margin: 30px 0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.822);
+    letter-spacing: 2px;
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
+    border: 2px solid rgba(255, 0, 0, 0.682);
+    transition: all 0.3s ease-in-out;
+    
+}
+
+.movieDescription{
+    text-align: center;
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+.specificMovieContainer ul {
+    list-style-type: none;
+}
+
+.buttonTitles{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin: 20px 0;
+}
+
+.specificMovieContainer .categoryList,
+.specificMovieContainer .actorList,
+.specificMovieContainer .streamList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.specificMovieContainer .categoryList li,
+.specificMovieContainer .actorList li,
+.specificMovieContainer .streamList li {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 8px;
+    color: #fff;
+    transition: transform 0.3s ease-in-out;
+}
+
+.specificMovieContainer .categoryList li:hover,
+.specificMovieContainer .actorList li:hover,
+.specificMovieContainer .streamList li:hover {
+    background: rgba(255, 0, 0, 0.6);
+}
+
+.specificMovieContainer .backButton {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.specificMovieContainer .backButton a {
+    background-color: #ff0000;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.specificMovieContainer .backButton a:hover {
+    background-color: #cc0000;
+}

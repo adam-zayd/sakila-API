@@ -124,6 +124,7 @@
     border: 2px solid rgba(255, 0, 0, 0.682);
     transition: all 0.3s ease-in-out;
 }
+
 body{
     padding-top: 80px;
 }

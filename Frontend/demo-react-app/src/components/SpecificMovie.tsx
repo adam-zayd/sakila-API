@@ -2,13 +2,14 @@
 import {useState, useEffect} from "react";
 import { useParams } from "react-router";
 import {Movie} from "./MovieCard";
+import "./SpecificDisplay.css";
 
 export default function SpecificMovie(){
-    const {id} = useParams();
-    const [movie, setMovie] = useState<Movie|null> (null);
-    const [error, setError] = useState<Error|null> (null);
-    const [loading, setLoading] = useState(true);
-
+    const {id}= useParams();
+    const [movie, setMovie]= useState<Movie|null> (null);
+    const [error, setError]= useState<Error|null> (null);
+    const [loading, setLoading]= useState(true);
+1
     useEffect(() => {
         setLoading(true);
         fetch(`http://localhost:8080/films/${id}`)
@@ -36,18 +37,41 @@ export default function SpecificMovie(){
     }
 
     return(
-        <div>
-            {movie?(
-                <ul>
-                    <h3>{movie.title}</h3>
-                    <p>{movie.description}</p><p>Release Year: {movie.releaseYear}</p><p>Rating: {movie.rating}</p><p>Language: {movie.language.name}</p><p>Length: {Math.floor(movie.length / 60)}h {movie.length % 60}m</p>
-                    <p>Categories: {movie.categories.length>0? movie.categories.map(cat => <li key={cat.name}>{cat.name}</li>) : "Unknown"}</p>
-                    <p>Stream on: {movie.streams.length>0? movie.streams.map(stream => <li key={stream.name}>{stream.name}</li>) : "Unknown"}</p>
-                    <p>Actors: {movie.actors.length>0? movie.actors.map(actor => <li key={actor.fullName}>{actor.fullName}</li>) : "Unknown"}</p>
-                </ul>
-            ) : (
-                <p>FILM NOT FOUND</p>
-            )}
-        </div>
+        <div className="specificMovieContainer">
+    {movie? (
+        <>
+            <h1 className="specificPageTitle">{movie.title}</h1>
+            <p className="movieDescription"><strong>{movie.description}</strong></p>
+            <p>Rating: {movie.rating}</p>
+            <p>Language: {movie.language.name}</p>
+            <p>Length: {Math.floor(movie.length/60)}h {movie.length%60}m</p>
+            <p>Release Year: {movie.releaseYear}</p>
+            <p className="buttonTitles">Categories:</p>
+            <ul className="buttons">
+                {movie.categories.length > 0 ? movie.categories.map(cat => (
+                    <li key={cat.name}>{cat.name}</li>
+                )) : "Unknown"}
+            </ul>
+            <p className="buttonTitles">Stream on:</p>
+            <ul className="buttons">
+                {movie.streams.length > 0 ? movie.streams.map(stream => (
+                    <li key={stream.name}>{stream.name}</li>
+                )) : "Unknown"}
+            </ul>
+            <p className="buttonTitles">Actors:</p>
+            <ul className="buttons">
+                {movie.actors.length > 0 ? movie.actors.map(actor => (
+                    <li key={actor.fullName}>{actor.fullName}</li>
+                )) : "Unknown"}
+            </ul>
+        </>
+    ) : (
+        <p>FILM NOT FOUND</p>
+    )}
+    <div className="backButton">
+        <a href="/movies">Back to Movies</a>
+    </div>
+</div>
+
     );
 }
