@@ -9,7 +9,7 @@ export default function SpecificMovie(){
     const [movie, setMovie]= useState<Movie|null> (null);
     const [error, setError]= useState<Error|null> (null);
     const [loading, setLoading]= useState(true);
-1
+
     useEffect(() => {
         setLoading(true);
         fetch(`http://localhost:8080/films/${id}`)
