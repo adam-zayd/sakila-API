@@ -29,7 +29,7 @@ export default function CreateActor() {
                 body: JSON.stringify({
                     firstName,
                     lastName,
-                    filmIds: filmIdArray
+                    films: filmIdArray
                 })
             });
 
