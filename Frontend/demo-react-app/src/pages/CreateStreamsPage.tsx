@@ -1,6 +1,6 @@
-import CreateStreaming from "../components/CreateStreaming";
+// import CreateStreaming from "../components/CreateStreaming";
 
-export default function CreateStreamsPage(){
-    return <CreateStreaming />
-}
+// export default function CreateStreamsPage(){
+//     return <CreateStreaming />
+// }
 

@@ -1,6 +1,6 @@
 
-import {useState, useEffect} from "react";
-import {Category} from "./CategoryCard.tsx";
-import {baseUrl} from "../../config.ts";
+// import {useState, useEffect} from "react";
+// import {Category} from "./CategoryCard.tsx";
+// import {baseUrl} from "../../config.ts";
 
-export default function CreateCategory(){}
+// export default function CreateCategory(){}
