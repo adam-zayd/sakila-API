@@ -62,7 +62,7 @@ public class FilmService {
                     .stream()
                     .map(categoryId -> categoryRepo
                             .findById(categoryId)
-                            .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST),"Category ID invalid: "+categoryId)))
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Category ID invalid: "+categoryId)))
                     .collect(Collectors.toCollection(ArrayList::new));
             film.setCategories(categories);
 
@@ -72,7 +72,7 @@ public class FilmService {
                     .stream()
                     .map(actorId -> actorRepo
                             .findById(actorId)
-                            .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST),"Actor ID invalid: "+actorId)))
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Actor ID invalid: "+actorId)))
                     .collect(Collectors.toCollection(ArrayList::new));
             film.setCast(cast);
         }
@@ -81,7 +81,7 @@ public class FilmService {
                     .stream()
                     .map(serviceId -> streamingRepo
                             .findById(serviceId)
-                            .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST),"Stream ID invalid: "+serviceId)))
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Stream ID invalid: "+serviceId)))
                     .collect(Collectors.toCollection(ArrayList::new));
             film.setStreams(streams);
         }

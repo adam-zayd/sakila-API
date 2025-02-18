@@ -35,7 +35,7 @@ export default function CreateActor() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to create actor");
+                throw new Error(errorData.message|| "Failed to create actor");
             }
 
             alert("Actor created successfully!");

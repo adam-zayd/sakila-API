@@ -41,7 +41,7 @@ public class StreamingService {
             final var films = streamingInput.getFilms()
                     .stream()
                     .map(filmId -> filmRepo.findById(filmId)
-                            .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST),"Film ID invalid: "+filmId)))
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Film ID invalid: "+filmId)))
                     .collect(Collectors.toCollection(ArrayList::new));
             streaming.setFilms(films);
         }
