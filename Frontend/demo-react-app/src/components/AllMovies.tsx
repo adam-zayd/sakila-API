@@ -11,14 +11,25 @@ export default function AllMovies(){
 
     useEffect(() => {
         fetch(`${baseUrl}/films`)
-            .then(response => response.json())
-            .then(data => {setMovies(data);})
-            
-    }, []); 
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            setMovies(data);
+        })
+        .catch(error => {
+            console.error("Error fetching movies:", error);
+            setMovies([]);
+        });
+}, []);
 
     return (
         <div>
             <h1 className="pageTitle">All Movies</h1>
+            
             <article className= "allMovies">
                 {movies.map(movie => (<li className = "individuals" key= {movie.id}>
                         <h3>
