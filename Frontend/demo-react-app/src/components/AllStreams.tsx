@@ -3,6 +3,7 @@ import {useState, useEffect} from "react";
 import {Streaming} from "./PartialStreamingCard";
 import { Link } from "react-router";
 import "./AllDisplay.css";
+import { baseUrl } from "../../config";
 
 export default function AllStreams(){
     const [streams, setStreams]= useState<Streaming[]>([]);
