@@ -8,7 +8,7 @@ export default function AllStreams(){
     const [streams, setStreams]= useState<Streaming[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/streams")
+        fetch(`${baseUrl}/streams`)
             .then(response => response.json())
             .then(data => setStreams(data));
     }, []);

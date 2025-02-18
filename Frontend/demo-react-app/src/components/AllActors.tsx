@@ -3,12 +3,13 @@ import {useState, useEffect} from "react";
 import {Actor} from "./PartialActorCard";
 import { Link } from "react-router";
 import "./AllDisplay.css";
+import { baseUrl } from "../../config";
 
 export default function AllActors(){
     const [actors, setActors]= useState<Actor[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/actors")
+        fetch(`${baseUrl}/actors`)
             .then(response => response.json())
             .then(data => setActors(data));
     }, []);

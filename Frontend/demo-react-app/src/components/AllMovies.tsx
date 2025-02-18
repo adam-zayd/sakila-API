@@ -3,13 +3,14 @@ import {useState, useEffect} from "react";
 import {Movie} from "./PartialMovieCard";
 import { Link } from "react-router";
 import "./AllDisplay.css";
+import { baseUrl } from "../../config";
 
 
 export default function AllMovies(){
     const [movies, setMovies]= useState<Movie[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/films")
+        fetch(`${baseUrl}/films`)
             .then(response => response.json())
             .then(data => {setMovies(data);})
             

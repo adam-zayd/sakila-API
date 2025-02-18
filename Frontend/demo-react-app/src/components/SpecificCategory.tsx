@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import { useParams } from "react-router";
 import {Category} from "./CategoryCard";
+import {baseUrl} from "../../config.ts";
 
 export default function SpecificCategory(){
     const {id} = useParams();
@@ -10,7 +11,7 @@ export default function SpecificCategory(){
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:8080/categories/${id}`)
+        fetch(`${baseUrl}/categories/${id}`)
         .then(response => {
             if (response.ok){
                 return response.json();

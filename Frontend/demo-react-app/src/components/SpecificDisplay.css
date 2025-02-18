@@ -44,30 +44,19 @@
     margin: 20px 0;
 }
 
-.specificMovieContainer .categoryList,
-.specificMovieContainer .actorList,
-.specificMovieContainer .streamList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+.attributeItem:hover .attributeText {
+    color: white;
 }
 
-.specificMovieContainer .categoryList li,
-.specificMovieContainer .actorList li,
-.specificMovieContainer .streamList li {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 8px 15px;
-    margin: 5px;
-    border-radius: 8px;
-    color: #fff;
-    transition: transform 0.3s ease-in-out;
+.attributeItem .attributeText:hover {
+    color: #ff0000;
 }
 
-.specificMovieContainer .categoryList li:hover,
-.specificMovieContainer .actorList li:hover,
-.specificMovieContainer .streamList li:hover {
-    background: rgba(255, 0, 0, 0.6);
+.attributeItem:hover {
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.582);
+    background: rgb(23, 24, 24);
 }
+
 
 .specificMovieContainer .backButton {
     margin-top: 20px;

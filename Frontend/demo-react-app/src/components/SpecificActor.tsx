@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import { useParams } from "react-router";
 import {Actor} from "./ActorCard";
+import {baseUrl} from "../../config.ts";
 
 export default function SpecificActor(){
     const {id} = useParams();
@@ -10,7 +11,7 @@ export default function SpecificActor(){
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:8080/actors/${id}`)
+        fetch(`${baseUrl}/actors/${id}`)
         .then(response => {
             if (response.ok){
                 return response.json();

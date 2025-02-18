@@ -3,12 +3,13 @@ import {useState, useEffect} from "react";
 import {Category} from "./PartialCategoryCard";
 import { Link } from "react-router";
 import "./AllDisplay.css";
+import { baseUrl } from "../../config";
 
 export default function AllCategories(){
     const [categories, setCategories]= useState<Category[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/categories")
+        fetch(`${baseUrl}/categories`)
             .then(response => response.json())
             .then(data => setCategories(data));
     }, []);

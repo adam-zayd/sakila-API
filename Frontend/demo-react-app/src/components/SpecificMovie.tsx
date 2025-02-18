@@ -1,8 +1,9 @@
 
 import {useState, useEffect} from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import {Movie} from "./MovieCard";
 import "./SpecificDisplay.css";
+import {baseUrl} from "../../config.ts";
 
 export default function SpecificMovie(){
     const {id}= useParams();
@@ -12,7 +13,7 @@ export default function SpecificMovie(){
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:8080/films/${id}`)
+        fetch(`${baseUrl}/films/${id}`)
         .then(response => {
             if (response.ok){
                 return response.json();
@@ -49,7 +50,7 @@ export default function SpecificMovie(){
             <p className="buttonTitles">Categories:</p>
             <ul className="buttons">
                 {movie.categories.length > 0 ? movie.categories.map(cat => (
-                    <li key={cat.name}>{cat.name}</li>
+                    <li className="attributeItem"><Link className= "attributeText" to={`/categories/${cat.categoryId}`}>{cat.name}</Link></li>
                 )) : "Unknown"}
             </ul>
             <p className="buttonTitles">Stream on:</p>

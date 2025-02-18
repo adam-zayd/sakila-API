@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
-import { useParams } from "react-router";
+import {useParams} from "react-router";
 import {Streaming} from "./StreamingCard";
+import {baseUrl} from "../../config.ts";
 
 export default function SpecificStreaming(){
     const {id} = useParams();
@@ -10,7 +11,7 @@ export default function SpecificStreaming(){
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:8080/streams/${id}`)
+        fetch(`${baseUrl}/streams/${id}`)
         .then(response => {
             if (response.ok){
                 return response.json();
