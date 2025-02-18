@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 export default function CreateActor() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [filmIds, setFilmIds] = useState<string[]>([]);
+    const [filmIds, setFilmIds] = useState<number[]>([]);
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -20,7 +20,7 @@ export default function CreateActor() {
             return;
         }
 
-        const filmIdArray = filmIds.filter(id => id.trim() !== "");
+        const filmIdArray = filmIds.filter(id => !isNaN(id));
 
         try {
             const response = await fetch(`${baseUrl}/actors`, {
@@ -72,7 +72,7 @@ export default function CreateActor() {
                     <input
                         type="text"
                         value={filmIds.join(", ")} 
-                        onChange={(e) => setFilmIds(e.target.value.split(",").map(id => id.trim()))} 
+                        onChange={(e) => setFilmIds(e.target.value.split(",").map(id => Number(id.trim())))}  
                     />
                 </div>
                 <button type="submit">Create Actor</button>
