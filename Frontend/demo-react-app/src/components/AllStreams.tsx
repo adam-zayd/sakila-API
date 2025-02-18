@@ -17,6 +17,11 @@ export default function AllStreams(){
     return (
         <div>
             <h1 className="pageTitle">All Streams</h1>
+
+            <button className="createButton">
+                <Link to="/streams/create">CREATE STREAM</Link>
+            </button>
+
             <article className= "allStreams">
                 {streams.map(streaming => (<li className="individuals" key= {streaming.id}>
                         <h3>

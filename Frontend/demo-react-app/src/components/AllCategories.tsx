@@ -17,6 +17,11 @@ export default function AllCategories(){
     return (
         <div className= "container">
             <h1 className="pageTitle">All Categories</h1>
+
+            <button className="createButton">
+                <Link to="/streams/create">CREATE STREAM</Link>
+            </button>
+
             <article className= "allCategories">
                 {categories.map(category => (<li className="individuals" key= {category.id}>
                         <h3>

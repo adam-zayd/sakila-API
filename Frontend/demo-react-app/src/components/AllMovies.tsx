@@ -29,6 +29,10 @@ export default function AllMovies(){
     return (
         <div>
             <h1 className="pageTitle">All Movies</h1>
+
+            <button className="createButton">
+                <Link to="/films/create">CREATE FILM</Link>
+            </button>
             
             <article className= "allMovies">
                 {movies.map(movie => (<li className = "individuals" key= {movie.id}>
