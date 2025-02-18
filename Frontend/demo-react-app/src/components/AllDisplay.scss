@@ -1,3 +1,24 @@
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+
 @import url(https://fonts.googleapis.com/css?family=Quattrocento+Sans);
 
 @mixin position-center($text-align: center) {
@@ -33,7 +54,7 @@
 		@for $i from 0 through 6 {
 			&:nth-child(#{$i + 1}) {
 				filter: blur(0px);
-				animation: blur-text 1.5s (#{$i/5})+s infinite linear alternate;
+				animation: blur-text 1.5s (#{calc($i/5)})+s infinite linear alternate;
 			}
 		}
 	}

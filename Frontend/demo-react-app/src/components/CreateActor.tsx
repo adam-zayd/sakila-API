@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 export default function CreateActor() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [filmIds, setFilmIds] = useState<number[]>([]); // Initial film IDs state is an empty array
+    const [filmIds, setFilmIds] = useState<string[]>([]);
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -20,7 +20,13 @@ export default function CreateActor() {
             return;
         }
 
-        const filmIdArray = filmIds.filter(id => !isNaN(id));
+        const parsedFilms = filmIds.map(id => Number(id.trim()));
+
+        if (parsedFilms.some(isNaN)) {
+            alert("One or more Film IDs are not valid numbers.");
+            return;
+        }
+
 
         try {
             const response = await fetch(`${baseUrl}/actors`, {
@@ -29,7 +35,7 @@ export default function CreateActor() {
                 body: JSON.stringify({
                     firstName,
                     lastName,
-                    films: filmIdArray
+                    films: parsedFilms
                 })
             });
 
@@ -45,7 +51,6 @@ export default function CreateActor() {
         }
     };
 
-    // Function to reset filmIds to initial state (empty array)
     const resetFilms = () => {
         setFilmIds([]);
     };
@@ -76,12 +81,13 @@ export default function CreateActor() {
                     <label>Film IDs (comma-separated):</label>
                     <input
                         type="text"
-                        value={filmIds.join(", ")} // Display film IDs as a comma-separated string
-                        onChange={(e) => setFilmIds(e.target.value.split(",").map(id => Number(id.trim())))}  
+                        value={filmIds}
+                        onChange={(e) => setFilmIds(e.target.value.split(",").map(id => id.trim()))}
+ 
                     />
                 </div>
                 <button type="submit">Create Actor</button>
-                <button type="button" onClick={resetFilms}>Reset Films</button> {/* Reset Films button */}
+                <button type="button" onClick={resetFilms}>Reset Films</button>
             </form>
         </div>
     );

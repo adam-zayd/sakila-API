@@ -1,46 +1,164 @@
-import {useState, useEffect} from "react";
-import { useParams } from "react-router";
-import {Actor} from "./ActorCard";
-import {baseUrl} from "../../config.ts";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams, Link } from "react-router";
+import { Actor } from "./ActorCard";
+import { baseUrl } from "../../config.ts";
+import { Edit } from "lucide-react"; 
 
-export default function SpecificActor(){
-    const {id} = useParams();
-    const [actor, setActor] = useState<Actor|null> (null);
-    const [error, setError] = useState<Error|null> (null);
+export default function SpecificActor() {
+    const { id } = useParams();
+    const [actor, setActor] = useState<Actor | null>(null);
+    const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState(true);
+    const [editMode, setEditMode] = useState(false);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
         fetch(`${baseUrl}/actors/${id}`)
-        .then(response => {
-            if (response.ok){
-                return response.json();
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(`ERROR: ${response.status}`);
+            })
+            .then(data => {
+                setActor(data);
+                setFirstName(data.firstName);
+                setLastName(data.lastName);
+            })
+            .catch(setError)
+            .finally(() => setLoading(false));
+    }, [id]);
+
+    const handleDelete = async () => {
+        if (!window.confirm("Are you sure you want to delete this actor?")) return;
+
+        try {
+            const response = await fetch(`${baseUrl}/actors?id=${id}`, {
+                method: "DELETE",
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to delete actor");
             }
-            throw new Error(`ERROR: ${response.status}`);
-        })
-        .then(setActor)
-        .catch(setError)
-        .finally(() => setLoading(false));
-}, [id]);
 
-    if(loading){
-        return <h1>Loading...</h1>
+            alert("Actor deleted successfully!");
+            navigate("/actors");
+        } catch (error: any) {
+            alert(`Error: ${error.message}`);
+        }
+    };
+
+    const handleEdit = () => {
+        setEditMode(true);
+    };
+
+    const handleSave = async () => {
+        if (firstName.length < 1 || firstName.length > 45 || lastName.length < 1 || lastName.length > 45) {
+            alert("First and last name must be between 1 and 45 characters.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${baseUrl}/actors/${id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firstName, lastName }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to update actor");
+            }
+
+            setEditMode(false);
+            alert("Actor updated successfully!");
+        } catch (error: any) {
+            alert(`Error: ${error.message}`);
+        }
+    };
+
+    if (loading) {
+        return <h1>Loading...</h1>;
     }
 
-    if(error){
-        return <h1>{error.message}</h1>
+    if (error) {
+        return <h1>{error.message}</h1>;
     }
 
-    if(!actor){
-        return <h1>Actor failed to load</h1>
+    if (!actor) {
+        return <h1>Actor failed to load</h1>;
     }
-    
-    return(
+
+    return (
         <div>
-            {actor?(
+            {actor ? (
                 <ul>
-                    <h3>{actor.fullName}</h3>
-                    <p>Films cast in: {actor.films.length>0? actor.films.map(film => <li key={film.title}>{film.title}</li>) : "Unknown"}</p>
+                    <h3>
+                        {editMode ? (
+                            <input 
+                                type="text" 
+                                value={firstName} 
+                                onChange={(e) => setFirstName(e.target.value)}
+                                maxLength={45} 
+                            />
+                        ) : (
+                            <>
+                                {firstName.toUpperCase()}
+                                <Edit 
+                                    size={20} 
+                                    style={{ cursor: "pointer", marginLeft: "10px" }} 
+                                    onClick={handleEdit} 
+                                />
+                            </>
+                        )}
+                    </h3>
+                    <h3>
+                        {editMode ? (
+                            <input 
+                                type="text" 
+                                value={lastName} 
+                                onChange={(e) => setLastName(e.target.value)}
+                                maxLength={45} 
+                            />
+                        ) : (
+                            <>
+                                {lastName.toUpperCase()}
+                                <Edit 
+                                    size={20} 
+                                    style={{ cursor: "pointer", marginLeft: "10px" }} 
+                                    onClick={handleEdit} 
+                                />
+                            </>
+                        )}
+                    </h3>
+                    
+                    {editMode && (
+                        <button 
+                            onClick={handleSave} 
+                            style={{ backgroundColor: "green", color: "white", padding: "10px", border: "none", cursor: "pointer", marginTop: "10px" }}
+                        >
+                            Save Changes
+                        </button>
+                    )}
+
+                    <p>Films cast in: {actor.films.length > 0 ? actor.films.map(film => <li key={film.title}>{film.title}</li>) : "Unknown"}</p>
+                    
+                    <Link to={`/actors/${id}/update`}>
+                        <button 
+                            style={{ padding: "10px", backgroundColor: "blue", color: "white", border: "none", cursor: "pointer", marginTop: "10px" }}
+                        >
+                            EDIT ALL
+                        </button>
+                    </Link>
+
+                    <button 
+                        onClick={handleDelete} 
+                        style={{ backgroundColor: "red", color: "white", padding: "10px", border: "none", cursor: "pointer", marginTop: "10px" }}
+                    >
+                        DELETE ACTOR
+                    </button>
                 </ul>
             ) : (
                 <p>ACTOR NOT FOUND</p>

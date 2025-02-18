@@ -37,6 +37,12 @@ export default function AllMovies() {
 
             {loading ? ( 
                 <div className="loading">
+                    <img 
+                        className="spinner"
+                        src="src\assets\Designer.jpeg" 
+                        alt="Loading Icon" 
+                        style={{ width: '200px', height: '200px', marginTop: '60px', marginLeft: '665px' }} 
+                    />
                 <div className="loading-text">
                     <span className="loading-text-words">L</span>
                     <span className="loading-text-words">O</span>
