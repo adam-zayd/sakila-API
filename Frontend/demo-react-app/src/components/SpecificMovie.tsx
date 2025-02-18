@@ -70,7 +70,7 @@ export default function SpecificMovie(){
         <p>FILM NOT FOUND</p>
     )}
     <div className="backButton">
-        <a href="/movies">Back to Movies</a>
+        <a href="/films">Back to Movies</a>
     </div>
 </div>
 

@@ -2,7 +2,7 @@
 import {useState, useEffect} from "react";
 import {Actor} from "./PartialActorCard";
 import { Link } from "react-router";
-import "./AllDisplay.css";
+import "./AllDisplay.scss";
 import { baseUrl } from "../../config";
 
 export default function AllActors(){
@@ -21,7 +21,7 @@ export default function AllActors(){
             <button className="createButton">
                 <Link to="/actors/create">CREATE ACTOR</Link>
             </button>
-            
+
             <article className= "allActors">
                 {actors.map(actor => (<li className="individuals" key= {actor.id}>
                         <h3>

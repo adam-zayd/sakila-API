@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 export default function CreateActor() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [filmIds, setFilmIds] = useState<number[]>([]);
+    const [filmIds, setFilmIds] = useState<number[]>([]); // Initial film IDs state is an empty array
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -35,7 +35,7 @@ export default function CreateActor() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message|| "Failed to create actor");
+                throw new Error(errorData.message || "Failed to create actor");
             }
 
             alert("Actor created successfully!");
@@ -43,6 +43,11 @@ export default function CreateActor() {
         } catch (error: any) {
             alert(`Error: ${error.message}`);
         }
+    };
+
+    // Function to reset filmIds to initial state (empty array)
+    const resetFilms = () => {
+        setFilmIds([]);
     };
 
     return (
@@ -71,11 +76,12 @@ export default function CreateActor() {
                     <label>Film IDs (comma-separated):</label>
                     <input
                         type="text"
-                        value={filmIds.join(", ")} 
+                        value={filmIds.join(", ")} // Display film IDs as a comma-separated string
                         onChange={(e) => setFilmIds(e.target.value.split(",").map(id => Number(id.trim())))}  
                     />
                 </div>
                 <button type="submit">Create Actor</button>
+                <button type="button" onClick={resetFilms}>Reset Films</button> {/* Reset Films button */}
             </form>
         </div>
     );

@@ -2,7 +2,7 @@
 import {useState, useEffect} from "react";
 import {Category} from "./PartialCategoryCard";
 import { Link } from "react-router";
-import "./AllDisplay.css";
+import "./AllDisplay.scss";
 import { baseUrl } from "../../config";
 
 export default function AllCategories(){
