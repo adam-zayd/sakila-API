@@ -35,7 +35,7 @@ public class CategoryService {
                 final var films = categoryInput.getFilms()
                         .stream()
                         .map(filmId -> filmRepo.findById(filmId)
-                                .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST))))
+                                .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST),"Film ID invalid: "+filmId)))
                         .collect(Collectors.toCollection(ArrayList::new));
                 category.setFilms(films);
             }

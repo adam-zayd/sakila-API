@@ -38,7 +38,7 @@ public class ActorService {
                     final var films = actorInput.getFilms()
                             .stream()
                             .map(filmId -> filmRepo.findById(filmId)
-                                    .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST),"Film not found")))
+                                    .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST),"Film ID invalid: "+filmId)))
                             .collect(Collectors.toCollection(ArrayList::new));
                     actor.setFilms(films);
 
