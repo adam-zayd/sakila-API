@@ -1,12 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { baseUrl } from "../../config";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
-export default function CreateActor() {
+export default function UpdateActor() {
+    const { id } = useParams();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [filmIds, setFilmIds] = useState<string[]>([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchActor = async () => {
+            try {
+                const response = await fetch(`${baseUrl}/actors/${id}`);
+                
+                if (!response.ok) {
+                    throw new Error("Failed to fetch actor data");
+                }
+                const data = await response.json();
+                setFirstName(data.firstName);
+                setLastName(data.lastName);
+                console.log(data.films);
+                setFilmIds(data.films.map((film: any) => String(film.filmId)));
+            } catch (error: any) {
+                alert(`Error: ${error.message}`);
+            }
+        };
+        fetchActor();
+    }, [id]);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -27,10 +48,9 @@ export default function CreateActor() {
             return;
         }
 
-
         try {
-            const response = await fetch(`${baseUrl}/actors`, {
-                method: "POST",
+            const response = await fetch(`${baseUrl}/actors/${id}`, {
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     firstName,
@@ -41,11 +61,11 @@ export default function CreateActor() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to create actor. Film ID/s may be invalid.");
+                throw new Error(errorData.message || "Failed to update actor. Film ID/s may be invalid.");
             }
 
-            alert("Actor created successfully!");
-            navigate("/actors");
+            alert("Actor updated successfully!");
+            navigate(`/actors/${id}`);
         } catch (error: any) {
             alert(`Error: ${error.message}`);
         }
@@ -57,7 +77,7 @@ export default function CreateActor() {
 
     return (
         <div>
-            <h1>CREATE ACTOR</h1>
+            <h1>UPDATE ACTOR</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>First Name:</label>
@@ -81,12 +101,11 @@ export default function CreateActor() {
                     <label>Film IDs (comma-separated):</label>
                     <input
                         type="text"
-                        value={filmIds}
+                        value={filmIds.join(",")}
                         onChange={(e) => setFilmIds(e.target.value.split(",").map(id => id.trim()))}
- 
                     />
                 </div>
-                <button type="submit">Create Actor</button>
+                <button type="submit">Update Actor</button>
                 <button type="button" onClick={resetFilms}>Reset Films</button>
             </form>
         </div>
