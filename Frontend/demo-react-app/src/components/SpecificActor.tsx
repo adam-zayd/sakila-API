@@ -12,6 +12,8 @@ export default function SpecificActor() {
     const [editMode, setEditMode] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [currentFirstName, setCurrentFirstName] = useState("");
+    const [currentLastName, setCurrentLastName] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,6 +29,8 @@ export default function SpecificActor() {
                 setActor(data);
                 setFirstName(data.firstName);
                 setLastName(data.lastName);
+                setCurrentFirstName(data.firstName);
+                setCurrentLastName(data.lastName);
             })
             .catch(setError)
             .finally(() => setLoading(false));
@@ -74,9 +78,17 @@ export default function SpecificActor() {
 
             setEditMode(false);
             alert("Actor updated successfully!");
+            setCurrentFirstName(firstName);
+            setCurrentLastName(lastName);
         } catch (error: any) {
             alert(`Error: ${error.message}`);
         }
+    };
+
+    const cancel = () => {
+        setEditMode(false);
+        setFirstName(currentFirstName);
+        setLastName(currentLastName);
     };
 
     if (loading) {
@@ -100,7 +112,7 @@ export default function SpecificActor() {
                             <input 
                                 type="text" 
                                 value={firstName} 
-                                onChange={(e) => setFirstName(e.target.value)}
+                                onChange={(e) => setFirstName(e.target.value.toUpperCase())}
                                 maxLength={45} 
                             />
                         ) : (
@@ -119,7 +131,7 @@ export default function SpecificActor() {
                             <input 
                                 type="text" 
                                 value={lastName} 
-                                onChange={(e) => setLastName(e.target.value)}
+                                onChange={(e) => setLastName(e.target.value.toUpperCase())}
                                 maxLength={45} 
                             />
                         ) : (
@@ -135,12 +147,20 @@ export default function SpecificActor() {
                     </h3>
                     
                     {editMode && (
+                        <div>
                         <button 
                             onClick={handleSave} 
                             style={{ backgroundColor: "green", color: "white", padding: "10px", border: "none", cursor: "pointer", marginTop: "10px" }}
                         >
-                            Save Changes
+                            SAVE
                         </button>
+                        <button 
+                                onClick={cancel} 
+                                style={{ backgroundColor: "red", color: "white", padding: "10px", border: "none", cursor: "pointer", marginTop: "10px", marginLeft: "10px" }}
+                            >
+                                CANCEL
+                            </button>
+                        </div>
                     )}
 
                     <p>Films cast in: {actor.films.length > 0 ? actor.films.map(film => <li key={film.title}>{film.title}</li>) : "Unknown"}</p>
