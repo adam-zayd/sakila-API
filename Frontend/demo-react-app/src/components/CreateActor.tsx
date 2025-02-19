@@ -51,8 +51,9 @@ export default function CreateActor() {
         }
     };
 
-    const resetFilms = () => {
-        setFilmIds([]);
+    const cancel = () => {
+        if (!window.confirm("Are you sure you want to cancel this create? You will lose all changes.")) return;
+        navigate("/actors");
     };
 
     return (
@@ -87,7 +88,7 @@ export default function CreateActor() {
                     />
                 </div>
                 <button type="submit">Create Actor</button>
-                <button type="button" onClick={resetFilms}>Reset Films</button>
+                <button type="button" onClick={cancel}>CANCEL</button>
             </form>
         </div>
     );
