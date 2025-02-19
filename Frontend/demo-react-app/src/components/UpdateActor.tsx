@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { baseUrl } from "../../config";
 import { useNavigate, useParams } from "react-router";
+import "./Buttons.css";
 
 export default function UpdateActor() {
     const { id } = useParams();
@@ -106,8 +107,8 @@ export default function UpdateActor() {
                         onChange={(e) => setFilmIds(e.target.value.split(",").map(id => id.trim()))}
                     />
                 </div>
-                <button type="submit">Update Actor</button>
-                <button type="button" onClick={cancel}>CANCEL</button>
+                <button type="submit" className= "saveButton">SAVE</button>
+                <button type="button" className= "cancelButton" onClick={cancel}>CANCEL</button>
             </form>
         </div>
     );

@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from "react-router";
 import { Actor } from "./ActorCard";
 import { baseUrl } from "../../config.ts";
 import { Edit } from "lucide-react"; 
+import "./Buttons.css";
 
 export default function SpecificActor() {
     const { id } = useParams();
@@ -118,9 +119,8 @@ export default function SpecificActor() {
                         ) : (
                             <>
                                 {firstName.toUpperCase()}
-                                <Edit 
-                                    size={20} 
-                                    style={{ cursor: "pointer", marginLeft: "10px" }} 
+                                <Edit className= "editButton"
+                                size={14}
                                     onClick={handleEdit} 
                                 />
                             </>
@@ -137,9 +137,8 @@ export default function SpecificActor() {
                         ) : (
                             <>
                                 {lastName.toUpperCase()}
-                                <Edit 
-                                    size={20} 
-                                    style={{ cursor: "pointer", marginLeft: "10px" }} 
+                                <Edit className= "editButton"
+                                    size={14}
                                     onClick={handleEdit} 
                                 />
                             </>
@@ -148,16 +147,10 @@ export default function SpecificActor() {
                     
                     {editMode && (
                         <div>
-                        <button 
-                            onClick={handleSave} 
-                            style={{ backgroundColor: "green", color: "white", padding: "10px", border: "none", cursor: "pointer", marginTop: "10px" }}
-                        >
+                        <button onClick={handleSave} className= "saveButton">
                             SAVE
                         </button>
-                        <button 
-                                onClick={cancel} 
-                                style={{ backgroundColor: "red", color: "white", padding: "10px", border: "none", cursor: "pointer", marginTop: "10px", marginLeft: "10px" }}
-                            >
+                        <button onClick={cancel} className="cancelButton">
                                 CANCEL
                             </button>
                         </div>
@@ -166,17 +159,12 @@ export default function SpecificActor() {
                     <p>Films cast in: {actor.films.length > 0 ? actor.films.map(film => <li key={film.title}>{film.title}</li>) : "Unknown"}</p>
                     
                     <Link to={`/actors/${id}/update`}>
-                        <button 
-                            style={{ padding: "10px", backgroundColor: "blue", color: "white", border: "none", cursor: "pointer", marginTop: "10px" }}
-                        >
+                        <button className= "editButton">
                             EDIT ALL
                         </button>
                     </Link>
 
-                    <button 
-                        onClick={handleDelete} 
-                        style={{ backgroundColor: "red", color: "white", padding: "10px", border: "none", cursor: "pointer", marginTop: "10px" }}
-                    >
+                    <button onClick={handleDelete} className="cancelButton">
                         DELETE ACTOR
                     </button>
                 </ul>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { baseUrl } from "../../config";
 import { useNavigate } from "react-router";
+import "./Buttons.css";
 
 export default function CreateActor() {
     const [firstName, setFirstName] = useState("");
@@ -87,8 +88,8 @@ export default function CreateActor() {
  
                     />
                 </div>
-                <button type="submit">Create Actor</button>
-                <button type="button" onClick={cancel}>CANCEL</button>
+                <button type="submit" className= "saveButton">SAVE</button>
+                <button type="button" className="cancelButton" onClick={cancel}>CANCEL</button>
             </form>
         </div>
     );
