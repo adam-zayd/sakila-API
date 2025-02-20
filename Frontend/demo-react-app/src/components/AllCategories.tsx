@@ -26,7 +26,7 @@ export default function AllCategories() {
             <h1 className="pageTitle">All Categories</h1>
 
             <button className="createButton">
-                <Link to="/streams/create">CREATE STREAM</Link>
+                <Link className="createCategoryLink" to="/categories/create">CREATE CATEGORIES</Link>
             </button>
 
             {loading ? (<div className="loading">

@@ -26,7 +26,7 @@ export default function AllStreams() {
             <h1 className="pageTitle">All Streams</h1>
 
             <button className="createButton">
-                <Link to="/streams/create">CREATE STREAM</Link>
+                <Link className="createStreamLink" to="/streams/create">CREATE STREAM</Link>
             </button>
 
             {loading ? (

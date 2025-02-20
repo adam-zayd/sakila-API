@@ -26,7 +26,7 @@ export default function AllActors() {
             <h1 className="pageTitle">All Actors</h1>
 
             <button className="createButton">
-                <Link to="/actors/create">CREATE ACTOR</Link>
+                <Link className="createActorLink" to="/actors/create">CREATE ACTOR</Link>
             </button>
 
             {loading ? (
