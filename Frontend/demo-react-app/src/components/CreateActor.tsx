@@ -64,6 +64,7 @@ export default function CreateActor() {
                 <div>
                     <label>First Name:</label>
                     <input
+                        className= "firstNameInput"
                         type="text"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
@@ -73,6 +74,7 @@ export default function CreateActor() {
                 <div>
                     <label>Last Name:</label>
                     <input
+                    className= "lastNameInput"
                         type="text"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
@@ -82,6 +84,7 @@ export default function CreateActor() {
                 <div>
                     <label>Film IDs (comma-separated):</label>
                     <input
+                    className= "filmsInput"
                         type="text"
                         value={filmIds}
                         onChange={(e) => setFilmIds(e.target.value.split(",").map(id => id.trim()))}
