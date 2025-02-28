@@ -7,6 +7,7 @@ import { baseUrl } from "../../config";
 export default function AllActors() {
     const [actors, setActors] = useState<Actor[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [selectedActors, setSelectedActors] = useState<Set<number>>(new Set());
 
     useEffect(() => {
         fetch(`${baseUrl}/actors`)
@@ -21,6 +22,24 @@ export default function AllActors() {
             });
     }, []);
 
+    const toggleSelection = (actorId: number) => {
+        setSelectedActors(prevSelected => {
+            const newSelected = new Set(prevSelected);
+            if (newSelected.has(actorId)) {
+                newSelected.delete(actorId); // Deselect the actor
+            } else {
+                newSelected.add(actorId); // Select the actor
+            }
+            return newSelected;
+        });
+    };
+
+    const deleteSelectedActors = () => {
+        const newActors = actors.filter(actor => !selectedActors.has(actor.id));
+        setActors(newActors);
+        setSelectedActors(new Set()); // Reset selection after deletion
+    };
+
     return (
         <div>
             <h1 className="pageTitle">All Actors</h1>
@@ -28,6 +47,13 @@ export default function AllActors() {
             <button className="createButton">
                 <Link className="createActorLink" to="/actors/create">CREATE ACTOR</Link>
             </button>
+
+            {selectedActors.size > 0 && (
+                <button className="deleteButton" onClick={deleteSelectedActors}>
+                    Delete All Selected
+                </button>
+            )}
+
 
             {loading ? (
                 <div className="loading">
@@ -50,6 +76,11 @@ export default function AllActors() {
                                     {actor.fullName}
                                 </Link>
                             </h3>
+                            <input
+                                type="checkbox"
+                                checked={selectedActors.has(actor.id)}
+                                onChange={() => toggleSelection(actor.id)}
+                            />
                         </li>
                     ))}
                 </article>
