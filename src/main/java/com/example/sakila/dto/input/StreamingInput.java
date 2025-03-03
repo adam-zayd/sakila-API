@@ -11,11 +11,11 @@ import java.util.List;
 @Getter
 public class StreamingInput {
         @NotNull(groups= {ValidationGroup.Create.class, ValidationGroup.Replace.class}, message= "You must enter a Name")
-        @Size(min= 1,max= 45, message= "First name must be between 1 and 45 characters")
+        @Size(min= 1,max= 45, message= "Name must be between 1 and 45 characters")
         private String name;
 
         @NotNull (groups= {ValidationGroup.Create.class, ValidationGroup.Replace.class}, message= "You must enter a Wesbite domain")
-        @Size(min= 1,max= 255, message= "Last name must be between 1 and 255 characters")
+        @Size(min= 1,max= 255, message= "Website Name must be between 1 and 255 characters")
         private String website;
 
         @Digits(integer= 3,fraction= 2)

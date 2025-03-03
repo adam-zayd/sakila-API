@@ -16,7 +16,7 @@ import CreateFilmsPage from './pages/CreateFilmsPage.tsx'
 import CreateActorsPage from './pages/CreateActorsPage.tsx'
 import UpdateActorPage from './pages/UpdateActorPage.tsx'
 import CreateCategoriesPage from './pages/CreateCategoriesPage.tsx'
-// import CreateStreamsPage from './pages/CreateStreamsPage.tsx'
+import CreateStreamsPage from './pages/CreateStreamsPage.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -33,7 +33,7 @@ createRoot(document.getElementById('root')!).render(
       <Route path="/categories" element={<CategoriesPage />} />
       <Route path="/categories/create" element={<CreateCategoriesPage />} />
       <Route path="/streams" element={<StreamsPage />} />
-      {/* <Route path="/streams/create" element={<CreateStreamsPage />} /> */}
+      <Route path="/streams/create" element={<CreateStreamsPage />} />
       <Route path="/films/:id" element={<SpecificFilmPage />} />
       
       <Route path="/categories/:id" element={<SpecificCategoryPage />} />
