@@ -34,7 +34,7 @@ public class ActorService {
             if (actorInput.getLastName()!= null) {
                 actor.setLastName(actorInput.getLastName().toUpperCase());
             }
-            if (actorInput.getFilms()!= null) {
+            if (actorInput.getFilms() != null) {
                     final var films = actorInput.getFilms()
                             .stream()
                             .map(filmId -> filmRepo.findById(filmId)

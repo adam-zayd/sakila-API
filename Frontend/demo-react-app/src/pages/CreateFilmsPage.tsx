@@ -1,6 +1,6 @@
-// import CreateMovie from "../components/CreateMovie";
+import CreateMovie from "../components/CreateMovie";
 
-// export default function CreateFilmsPage(){
-//     return <CreateMovie />
-// }
+export default function CreateFilmsPage(){
+    return <CreateMovie />
+}
 

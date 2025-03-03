@@ -1,6 +1,6 @@
-// import CreateCategory from "../components/CreateCategory";
+import CreateCategory from "../components/CreateCategory";
 
-// export default function CreateCategoriesPage(){
-//     return <CreateCategory />
-// }
+export default function CreateCategoriesPage(){
+    return <CreateCategory />
+}
 

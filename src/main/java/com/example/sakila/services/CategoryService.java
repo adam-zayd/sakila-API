@@ -31,14 +31,13 @@ public class CategoryService {
             category.setName(categoryInput.getName().toUpperCase());
         }
         if (categoryInput.getFilms()!= null) {
-            if (!categoryInput.getFilms().isEmpty()) {
                 final var films = categoryInput.getFilms()
                         .stream()
                         .map(filmId -> filmRepo.findById(filmId)
                                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Film ID invalid: "+filmId)))
                         .collect(Collectors.toCollection(ArrayList::new));
                 category.setFilms(films);
-            }
+
         }
     }
 
