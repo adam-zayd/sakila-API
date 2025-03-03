@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import "./AllDisplay.scss";
 import { baseUrl } from "../../config";
 
+
 export default function AllMovies() {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
