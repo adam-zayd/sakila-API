@@ -66,28 +66,33 @@ export default function SpecificMovie(){
             <p>Language: {movie.language.name}</p>
             <p>Length: {Math.floor(movie.length/60)}h {movie.length%60}m</p>
             <p>Release Year: {movie.releaseYear.slice(0, 4)}</p>
+
             <p className="buttonTitles">Categories:</p>
-            <ul className="buttons">
+            <article className="buttons">
                 {movie.categories.length > 0 ? movie.categories.map(cat => (
                     <li className="attributeItem"><Link className= "attributeText" to={`/categories/${cat.categoryId}`}>{cat.name}</Link></li>
                 )) : "Unknown"}
-            </ul>
+            </article>
+
             <p className="buttonTitles">Stream on:</p>
-            <ul className="buttons">
+            <article className="buttons">
                 {movie.streams.length > 0 ? movie.streams.map(stream => (
-                    <li key={stream.name}>{stream.name}</li>
-                )) : "Unknown"}
-            </ul>
-            <p className="buttonTitles">Actors:</p>
-            <ul className="buttons">
+                <li className="attributeItem"><Link className= "attributeText" to={`/streams/${stream.serviceId}`}>{stream.name}</Link></li>
+            )) : "Unknown"}
+            </article>
+
+            <p className="buttonTitles">Cast:</p>
+            <article className="buttons">
                 {movie.actors.length > 0 ? movie.actors.map(actor => (
-                    <li key={actor.fullName}>{actor.fullName}</li>
+                    <li className="attributeItem"><Link className= "attributeText" to={`/actors/${actor.actorId}`}>{actor.fullName}</Link></li>
                 )) : "Unknown"}
-            </ul>
+            </article>
+
         </>
     ) : (
         <p className="specificPageTitle">FILM NOT FOUND</p>
     )}
+    
     <div className="backButton">
         <a href="/films">Back to Movies</a>
     </div>

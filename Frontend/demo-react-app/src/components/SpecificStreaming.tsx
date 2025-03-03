@@ -40,7 +40,7 @@ export default function SpecificStreaming(){
             {streaming?(
                 <ul>
                     <h3>{streaming.name}</h3>
-                    <p>Website: {streaming.website}</p><p>Cost per month: {streaming.cost}</p>
+                    <p>Website: {streaming.website}</p><p>Cost per month: {streaming.cost} GBP</p>
                     <p>Films available: {streaming.films.length>0? streaming.films.map(film => <li key={film.title}>{film.title}</li>) : "Unknown"}</p>
                 </ul>
             ) : (
