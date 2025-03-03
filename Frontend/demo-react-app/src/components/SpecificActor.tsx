@@ -4,6 +4,7 @@ import { Actor } from "./ActorCard";
 import { baseUrl } from "../../config.ts";
 import { Edit } from "lucide-react"; 
 import "./Buttons.css";
+import "./SpecificDisplay.css";
 
 export default function SpecificActor() {
     const { id } = useParams();
@@ -105,10 +106,10 @@ export default function SpecificActor() {
     }
 
     return (
-        <div>
+        <div className="container">
             {actor ? (
                 <ul>
-                    <h3>
+                    <h3 className="specificPageTitle">
                         {editMode ? (
                             <input 
                                 type="text" 
@@ -126,7 +127,7 @@ export default function SpecificActor() {
                             </>
                         )}
                     </h3>
-                    <h3>
+                    <h3 className="specificPageTitle">
                         {editMode ? (
                             <input 
                                 type="text" 
@@ -156,7 +157,13 @@ export default function SpecificActor() {
                         </div>
                     )}
 
-                    <p>Films cast in: {actor.films.length > 0 ? actor.films.map(film => <li key={film.title}>{film.title}</li>) : "Unknown"}</p>
+                    <p className="buttonTitles">Films cast in:</p>
+
+                    <article className="buttons">
+                        {actor.films.length > 0 ? actor.films.map(movie => (
+                            <li className="attributeItem"><Link className= "attributeText" to={`/films/${movie.filmId}`}>{movie.title}</Link></li>
+                        )) : "Unknown"}
+                    </article>
                     
                     <Link to={`/actors/${id}/update`}>
                         <button className= "editButton">
@@ -167,6 +174,10 @@ export default function SpecificActor() {
                     <button onClick={handleDelete} className="cancelButton">
                         DELETE ACTOR
                     </button>
+
+                    <div className="backButton">
+                        <a href="/actors">Back to Actors</a>
+                    </div>
                 </ul>
             ) : (
                 <p>ACTOR NOT FOUND</p>

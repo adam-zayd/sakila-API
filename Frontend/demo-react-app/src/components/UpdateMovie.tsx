@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { baseUrl } from "../../config";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import "./Buttons.css";
 
-export default function CreateMovie() {
+export default function UpdateMovie() {
+    const { id } = useParams();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [releaseYear, setReleaseYear] = useState("");
@@ -14,6 +15,31 @@ export default function CreateMovie() {
     const [categories, setCategories] = useState<string[]>([]);
     const [streams, setStreams] = useState<string[]>([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchMovie = async () => {
+            try {
+                const response = await fetch(`${baseUrl}/films/${id}`);
+                
+                if (!response.ok) {
+                    throw new Error("Failed to fetch movie data");
+                }
+                const data = await response.json();
+                setTitle(data.title);
+                setDescription(data.description);
+                setReleaseYear(data.releaseYear);
+                setLength(data.length);
+                setRating(data.rating);
+                setLanguage(data.language.language.languageId);
+                setCast(data.cast.map((actor: any) => String(actor.actorId)));
+                setCategories(data.categories.map((category: any) => String(category.categoryId))); 
+                setStreams(data.streams.map((stream: any) => String(stream.streamId))); 
+            } catch (error: any) {
+                alert(`Error: ${error.message}`);
+            }
+        };
+        fetchMovie();
+    }, [id]);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -59,9 +85,9 @@ export default function CreateMovie() {
             if (releaseYear.trim() !== "") requestBody.releaseYear = releaseYear;
             if (length.trim() !== "") requestBody.length = length;
             if (rating.trim() !== "") requestBody.rating = rating;
-            
-            const response = await fetch(`${baseUrl}/films`, {
-                method: "POST",
+
+            const response = await fetch(`${baseUrl}/films/${id}`, {
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(requestBody)
             });
@@ -71,23 +97,23 @@ export default function CreateMovie() {
                 throw new Error(errorData.message || "Failed to create Film. Language/Actor/Category/Stream ID/s may be invalid.");
             }
 
-            alert("Movie created successfully!");
-            navigate("/films");
+            alert("Movie updated successfully!");
+            navigate(`/films/${id}`);
         } catch (error: any) {
             alert(`Error: ${error.message}`);
         }
     };
 
     const cancel = () => {
-        if (!window.confirm("Are you sure you want to cancel this create? You will lose all changes.")) return;
-        navigate("/films");
+        if (!window.confirm("Are you sure you want to cancel this update? You will lose all changes.")) return;
+        navigate(`/films/${id}`);
     };
 
     return (
         <div>
-            <h1>CREATE MOVIE</h1>
+            <h1>UPDATE MOVIE</h1>
             <form onSubmit={handleSubmit}>
-                <div>
+            <div>
                     <label>Title:</label>
                     <input
                         className= "titleInput"
@@ -128,7 +154,6 @@ export default function CreateMovie() {
                         max="65535"
                     />
                 </div>
-
                 <div>
                     <label>Rating:</label>
                     <select
@@ -144,7 +169,6 @@ export default function CreateMovie() {
                         <option value="NC-17">NC-17</option>
                     </select>
                 </div>
-
                 <div>
                     <label>Language:</label>
                     <input
@@ -156,13 +180,11 @@ export default function CreateMovie() {
                         required
                     />
                 </div>
-
                 <div>
-                    <label>Cast (Actor-IDs, comma-separated):</label>
+                    <label>Cast (Actor-Ids, comma-separated):</label>
                     <input
-                    className= "castInput"
                         type="text"
-                        value={cast}
+                        value={cast.join(",")}
                         onChange={(e) => setCast(e.target.value.split(",").map(id => id.trim()))}
                     />
                 </div>
@@ -171,7 +193,7 @@ export default function CreateMovie() {
                     <input
                     className= "categoriesInput"
                         type="text"
-                        value={categories}
+                        value={categories.join(",")}
                         onChange={(e) => setCategories(e.target.value.split(",").map(id => id.trim()))}
                     />
                 </div>
@@ -180,13 +202,13 @@ export default function CreateMovie() {
                     <input
                     className= "streamsInput"
                         type="text"
-                        value={streams}
+                        value={streams.join(",")}
                         onChange={(e) => setStreams(e.target.value.split(",").map(id => id.trim()))}
                     />
                 </div>
 
                 <button type="submit" className= "saveButton">SAVE</button>
-                <button type="button" className="cancelButton" onClick={cancel}>CANCEL</button>
+                <button type="button" className= "cancelButton" onClick={cancel}>CANCEL</button>
             </form>
         </div>
     );

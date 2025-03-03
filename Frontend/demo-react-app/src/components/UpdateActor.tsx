@@ -21,7 +21,6 @@ export default function UpdateActor() {
                 const data = await response.json();
                 setFirstName(data.firstName);
                 setLastName(data.lastName);
-                console.log(data.films);
                 setFilmIds(data.films.map((film: any) => String(film.filmId)));
             } catch (error: any) {
                 alert(`Error: ${error.message}`);

@@ -15,6 +15,7 @@ import SpecificStreamingPage from './pages/SpecificStreamingPage.tsx'
 import CreateFilmsPage from './pages/CreateFilmsPage.tsx'
 import CreateActorsPage from './pages/CreateActorsPage.tsx'
 import UpdateActorPage from './pages/UpdateActorPage.tsx'
+import UpdateFilmPage from './pages/UpdateFilmPage.tsx'
 import CreateCategoriesPage from './pages/CreateCategoriesPage.tsx'
 import CreateStreamsPage from './pages/CreateStreamsPage.tsx'
 
@@ -24,20 +25,27 @@ createRoot(document.getElementById('root')!).render(
     <Navbar/>
     <Routes>
       <Route path="/" element={<HomePage/>}/>
+
       <Route path="/films" element={<FilmsPage />} />
       <Route path="/films/create" element={<CreateFilmsPage />} />
+      <Route path="/films/:id" element={<SpecificFilmPage />} />
+      <Route path="/films/:id/update" element={<UpdateFilmPage />} />
+
       <Route path="/actors" element={<ActorsPage />} />
       <Route path="/actors/create" element={<CreateActorsPage />} />
       <Route path="/actors/:id" element={<SpecificActorPage />} />
       <Route path="/actors/:id/update" element={<UpdateActorPage />} />
+
       <Route path="/categories" element={<CategoriesPage />} />
       <Route path="/categories/create" element={<CreateCategoriesPage />} />
+      <Route path="/categories/:id" element={<SpecificCategoryPage />} />
+      {/* <Route path="/categories/:id/update" element={<UpdateCategoryPage />} /> */}
+
       <Route path="/streams" element={<StreamsPage />} />
       <Route path="/streams/create" element={<CreateStreamsPage />} />
-      <Route path="/films/:id" element={<SpecificFilmPage />} />
-      
-      <Route path="/categories/:id" element={<SpecificCategoryPage />} />
       <Route path="/streams/:id" element={<SpecificStreamingPage />} />
+      {/* <Route path="/streams/:id/update" element={<UpdateStreamingPage />} /> */}
+
       </Routes>
     </BrowserRouter>
   </StrictMode>,

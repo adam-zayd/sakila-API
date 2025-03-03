@@ -10,6 +10,15 @@ export default function SpecificMovie(){
     const [movie, setMovie]= useState<Movie|null> (null);
     const [error, setError]= useState<Error|null> (null);
     const [loading, setLoading]= useState(true);
+    const [editMode, setEditMode] = useState(false);
+    const [length, setLength] = useState("");
+    const [releaseYear, setReleaseYear] = useState("");
+    const [currentLength, setCurrentLength] = useState("");
+    const [currentReleaseYear, setCurrentReleaseYear] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [currentTitle, setCurrentTitle] = useState("");
+    const [currentDescription, setCurrentDescription] = useState("");
 
     useEffect(() => {
         setLoading(true);
@@ -20,7 +29,17 @@ export default function SpecificMovie(){
             }
             throw new Error(`ERROR: ${response.status}`);
         })
-        .then(setMovie)
+        .then(data => {
+            setMovie(data);
+            setTitle(data.title);
+            setDescription(data.description);
+            setCurrentTitle(data.title);
+            setCurrentDescription(data.description);
+            setLength(data.length);
+            setReleaseYear(data.releaseYear);
+            setCurrentLength(data.length);
+            setCurrentReleaseYear(data.releaseYear);
+        })
         .catch(setError)
         .finally(() => setLoading(false));
 }, [id]);
@@ -38,7 +57,7 @@ export default function SpecificMovie(){
     }
 
     return(
-        <div className="specificMovieContainer">
+        <div className="container">
     {movie? (
         <>
             <h1 className="specificPageTitle">{movie.title}</h1>
@@ -46,7 +65,7 @@ export default function SpecificMovie(){
             <p>Rating: {movie.rating}</p>
             <p>Language: {movie.language.name}</p>
             <p>Length: {Math.floor(movie.length/60)}h {movie.length%60}m</p>
-            <p>Release Year: {movie.releaseYear}</p>
+            <p>Release Year: {movie.releaseYear.slice(0, 4)}</p>
             <p className="buttonTitles">Categories:</p>
             <ul className="buttons">
                 {movie.categories.length > 0 ? movie.categories.map(cat => (
@@ -67,7 +86,7 @@ export default function SpecificMovie(){
             </ul>
         </>
     ) : (
-        <p>FILM NOT FOUND</p>
+        <p className="specificPageTitle">FILM NOT FOUND</p>
     )}
     <div className="backButton">
         <a href="/films">Back to Movies</a>
