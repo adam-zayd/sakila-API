@@ -7,6 +7,7 @@ import { baseUrl } from "../../config";
 export default function AllMovies() {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [selectedMovies, setSelectedMovies] = useState<Set<number>>(new Set());
 
     useEffect(() => {
         fetch(`${baseUrl}/films`)
@@ -27,13 +28,73 @@ export default function AllMovies() {
             });
     }, []);
 
+    const toggleSelection = (filmId: number) => {
+        setSelectedMovies(prevSelected => {
+            const newSelected = new Set(prevSelected);
+            if (newSelected.has(filmId)) {
+                newSelected.delete(filmId); 
+            } else {
+                newSelected.add(filmId);
+            }
+            return newSelected;
+        });
+    };
+
+    const deleteSelectedMovies = () => {
+        if (window.confirm("Are you sure you want to delete the selected movies?")) {
+            const deleteRequests = Array.from(selectedMovies).map(filmId => 
+                fetch(`${baseUrl}/films?id=${filmId}`, {
+                    method: "DELETE"
+                })
+            );
+    
+            Promise.all(deleteRequests)
+                .then(responses => {
+                    if (responses.some(response => !response.ok)) {
+                        throw new Error("Failed to delete some movies");
+                    }
+                    return responses;
+                })
+                .then(() => {
+                    setMovies(prevMovies => prevMovies.filter(movie => !selectedMovies.has(movie.id)));
+                    setSelectedMovies(new Set());
+                    alert("Selected movies have been deleted.");
+                })
+                .catch(error => {
+                    console.error("Error deleting movies:", error);
+                    alert("An error occurred while deleting movies.");
+                });
+        }
+    };
+
+    const resetSelectedMovies = () => {
+        if (window.confirm("Are you sure you want to deselect all movies?")) {
+        setSelectedMovies(new Set());
+        }
+    };
+
     return (
         <div>
             <h1 className="pageTitle">ALL MOVIES</h1>
 
-            <button className="createButton">
-                <Link className="createMovieLink" to="/films/create">CREATE MOVIE</Link>
-            </button>
+            <div className="fullPageContainer">
+                <button className="createButton">
+                    <Link className="createLink" to="/films/create">CREATE MOVIE</Link>
+                </button>
+            </div>
+
+            {selectedMovies.size > 0 && (
+                <>
+                <div className="fixedButtonsContainer">
+                        <button className="deleteButton" onClick={deleteSelectedMovies}>
+                            Delete All Selected
+                        </button>
+                        <button className="resetButton" onClick={resetSelectedMovies}>
+                            Reset Selected
+                        </button>
+                    </div>
+                </>
+            )}
 
             {loading ? ( 
                 <div className="loading">
@@ -57,6 +118,11 @@ export default function AllMovies() {
                 <article className="allMovies">
                     {movies.map(movie => (
                         <li className="individuals" key={movie.id}>
+                            <input
+                                type="checkbox"
+                                checked={selectedMovies.has(movie.id)}
+                                onChange={() => toggleSelection(movie.id)}
+                            />
                             <h3>
                                 <Link className="name" to={`/films/${movie.id}`}>
                                     {movie.title}
@@ -86,6 +152,7 @@ export default function AllMovies() {
                                       ))
                                     : "Unknown"}
                             </p>
+                        
                         </li>
                     ))}
                 </article>
