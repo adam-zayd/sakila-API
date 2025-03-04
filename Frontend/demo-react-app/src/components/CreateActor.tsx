@@ -59,7 +59,7 @@ export default function CreateActor() {
 
     return (
         <div>
-            <h1>CREATE ACTOR</h1>
+            <h1 className="pageTitle">CREATE ACTOR</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>First Name:</label>

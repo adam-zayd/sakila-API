@@ -58,7 +58,7 @@ export default function CreateCategory() {
 
     return (
         <div>
-            <h1>CREATE CATEGORY</h1>
+            <h1 className="pageTitle">CREATE CATEGORY</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Name:</label>

@@ -101,7 +101,7 @@ export default function UpdateMovie() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to create Film. Language/Actor/Category/Stream ID/s may be invalid.");
+                throw new Error(errorData.message || "Failed to create Film. Language/Actor/Category/Stream ID/s may be invalid. Be sure not to have a comma at the end of your input.");
             }
 
             alert("Movie updated successfully!");
@@ -118,7 +118,7 @@ export default function UpdateMovie() {
 
     return (
         <div>
-            <h1>UPDATE MOVIE</h1>
+            <h1 className="pageTitle">UPDATE MOVIE</h1>
             <form onSubmit={handleSubmit}>
             <div>
                     <label>Title:</label>
@@ -214,7 +214,7 @@ export default function UpdateMovie() {
                     />
                 </div>
 
-                <button type="submit" className= "saveButton">SAVE</button>
+                <button type="submit" className= "saveButton" onClick={handleSubmit}>SAVE</button>
                 <button type="button" className= "cancelButton" onClick={cancel}>CANCEL</button>
             </form>
         </div>

@@ -18,6 +18,8 @@ import UpdateActorPage from './pages/UpdateActorPage.tsx'
 import UpdateFilmPage from './pages/UpdateFilmPage.tsx'
 import CreateCategoriesPage from './pages/CreateCategoriesPage.tsx'
 import CreateStreamsPage from './pages/CreateStreamsPage.tsx'
+import UpdateCategoryPage from './pages/UpdateCategoryPage.tsx'
+import UpdateStreamingPage from './pages/UpdateStreamingPage.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -39,12 +41,12 @@ createRoot(document.getElementById('root')!).render(
       <Route path="/categories" element={<CategoriesPage />} />
       <Route path="/categories/create" element={<CreateCategoriesPage />} />
       <Route path="/categories/:id" element={<SpecificCategoryPage />} />
-      {/* <Route path="/categories/:id/update" element={<UpdateCategoryPage />} /> */}
+      <Route path="/categories/:id/update" element={<UpdateCategoryPage />} />
 
       <Route path="/streams" element={<StreamsPage />} />
       <Route path="/streams/create" element={<CreateStreamsPage />} />
       <Route path="/streams/:id" element={<SpecificStreamingPage />} />
-      {/* <Route path="/streams/:id/update" element={<UpdateStreamingPage />} /> */}
+      <Route path="/streams/:id/update" element={<UpdateStreamingPage />} />
 
       </Routes>
     </BrowserRouter>

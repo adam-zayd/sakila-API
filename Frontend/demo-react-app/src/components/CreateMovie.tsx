@@ -85,7 +85,7 @@ export default function CreateMovie() {
 
     return (
         <div>
-            <h1>CREATE MOVIE</h1>
+            <h1 className="pageTitle">CREATE MOVIE</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Title:</label>

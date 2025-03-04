@@ -74,7 +74,7 @@ export default function CreateStream() {
 
     return (
         <div>
-            <h1>CREATE STREAMING PLATFORM</h1>
+            <h1 className="pageTitle">CREATE STREAMING PLATFORM</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Name:</label>
