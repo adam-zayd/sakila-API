@@ -1,5 +1,6 @@
 
 export interface Movie{
+    filmId: any;
     id: number;
     title: string;
 }

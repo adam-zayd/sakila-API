@@ -14,7 +14,7 @@ export default function CreateStream() {
         event.preventDefault();
 
         if (website.length > 255) {
-            alert("Website must be between 1 and 45 characters.");
+            alert("Website must be between 1 and 255 characters.");
             return;
         }
 
