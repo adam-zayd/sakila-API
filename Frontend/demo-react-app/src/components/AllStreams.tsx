@@ -69,7 +69,7 @@ export default function AllStreams() {
     };
 
     return (
-        <div>
+        <div className="allContainer">
             <h1 className="pageTitle">All Streams</h1>
             <div className="fullPageContainer">
                 <button className="createButton">

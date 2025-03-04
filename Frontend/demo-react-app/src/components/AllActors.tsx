@@ -68,7 +68,7 @@ export default function AllActors() {
     };
 
     return (
-        <div>
+        <div className="allContainer">
             <h1 className="pageTitle">ALL ACTORS</h1>
 
             <div className="fullPageContainer">

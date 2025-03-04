@@ -69,7 +69,7 @@ export default function AllCategories() {
     };
 
     return (
-        <div className="container">
+        <div className="allContainer">
             <h1 className="pageTitle">All Categories</h1>
             <div className="fullPageContainer">
                 <button className="createButton">

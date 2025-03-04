@@ -75,7 +75,7 @@ export default function AllMovies() {
     };
 
     return (
-        <div>
+        <div className="allContainer">
             <h1 className="pageTitle">ALL MOVIES</h1>
 
             <div className="fullPageContainer">

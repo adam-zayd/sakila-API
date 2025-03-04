@@ -1,4 +1,14 @@
 
+.allContainer {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #1e1e1e75;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(255, 0, 0, 0.5);
+    color: #fff;
+}
+
 .spinner {
     width: 30px;
     height: 30px;
@@ -118,7 +128,7 @@
     list-style: none;
     background: #0d0d0d;
     padding: 15px 10px;
-    border-radius: 10px;
+    border-radius: 15px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
