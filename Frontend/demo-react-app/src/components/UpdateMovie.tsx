@@ -30,10 +30,10 @@ export default function UpdateMovie() {
                 setReleaseYear(data.releaseYear);
                 setLength(data.length);
                 setRating(data.rating);
-                setLanguage(data.language.language.languageId);
-                setCast(data.cast.map((actor: any) => String(actor.actorId)));
+                setLanguage(data.language.id);
+                setCast(data.actors.map((actor: any) => String(actor.actorId)));
                 setCategories(data.categories.map((category: any) => String(category.categoryId))); 
-                setStreams(data.streams.map((stream: any) => String(stream.streamId))); 
+                setStreams(data.streams.map((stream: any) => String(stream.serviceId))); 
             } catch (error: any) {
                 alert(`Error: ${error.message}`);
             }
@@ -60,30 +60,36 @@ export default function UpdateMovie() {
             }
         }
 
-        const parsedActors = cast.map(id => Number(id.trim()));
-        if (parsedActors.some(isNaN)){
-            alert("One or more Actor-IDs are not valid numbers.");
-            return;
-        }
+        const parsedActors = cast.length === 0 || (cast.length === 1 && cast[0] === "")? []:
+            cast.map(id => Number(id.trim()));
+            if (parsedActors.some(isNaN)) {
+                alert("One or more Actor-IDs are not valid numbers.");
+                return;
+            }
 
-        const parsedCategories = categories.map(id => Number(id.trim()));
-        if (parsedCategories.some(isNaN)){
-            alert("One or more Category-IDs are not valid numbers.");
-            return;
-        }
+        const parsedCategories = categories.length===0 || (categories.length === 1 && categories[0] === "")? []:
+            categories.map(id => Number(id.trim()));
+            if (parsedCategories.some(isNaN)){
+                alert("One or more Category-IDs are not valid numbers.");
+                return;
+            }
 
-        const parsedStreams = streams.map(id => Number(id.trim()));
-        if (parsedStreams.some(isNaN)){
-            alert("One or more Stream-IDs are not valid numbers.");
-            return;
-        }
+        const parsedStreams = streams.length===0 || (streams.length === 1 && streams[0] === "")? []:
+            streams.map(id => Number(id.trim()));
+            if (parsedStreams.some(isNaN)){
+                alert("One or more Stream-IDs are not valid numbers.");
+                return;
+            }
 
         try {
+            console.log(parsedActors);
+            
+            console.log("cast: ", cast  );
             const requestBody: any = { title, language: { id: language }, cast: parsedActors, categories: parsedCategories, streams: parsedStreams};
 
             if (description.trim() !== "") requestBody.description = description;
             if (releaseYear.trim() !== "") requestBody.releaseYear = releaseYear;
-            if (length.trim() !== "") requestBody.length = length;
+            if (length) requestBody.length = length;
             if (rating.trim() !== "") requestBody.rating = rating;
 
             const response = await fetch(`${baseUrl}/films/${id}`, {

@@ -162,7 +162,12 @@ const cancel = () => {
                             </div>
                         )}
 
-                    <p>Cost per month: {streaming.cost} GBP</p>
+                        {(() => {
+                            if (streaming.cost === 0 || streaming.cost === null) {
+                                return <p>Cost per month: Unknown</p>;
+                            }
+                            return <p>Cost per month: {streaming.cost} GBP</p>;
+                       })()}
 
                     <p className="buttonTitles">Films:</p>
     

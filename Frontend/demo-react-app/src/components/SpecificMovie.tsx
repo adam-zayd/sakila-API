@@ -165,8 +165,17 @@ const handleSave = async () => {
 
             <p>Rating: {movie.rating}</p>
             <p>Language: {movie.language.name}</p>
-            <p>Length: {Math.floor(movie.length/60)}h {movie.length%60}m</p>
             {(() => {
+                if (movie.length === null){
+                    return <p>Length: Unknown</p>;
+                }
+                return <p>Length: {Math.floor(movie.length/60)}h {movie.length%60}m</p>;
+            })()}
+            
+            {(() => {
+                if (movie.releaseYear === null){
+                    return <p>Release Year: Unknown</p>;
+                }
                 const releaseYear = movie.releaseYear.slice(0, 4);
                 return <p>Release Year: {releaseYear}</p>;
             })()}
