@@ -16,6 +16,7 @@ export default function UpdateMovie() {
     const [streams, setStreams] = useState<string[]>([]);
     const navigate = useNavigate();
 
+    
     useEffect(() => {
         const fetchMovie = async () => {
             try {
