@@ -3,6 +3,8 @@ import { Streaming } from "./PartialStreamingCard";
 import { Link } from "react-router";
 import "./AllDisplay.scss";
 import { baseUrl } from "../../config";
+import designerImage from "/NewDesigner.jpg";
+
 
 export default function AllStreams() {
     const [streams, setStreams] = useState<Streaming[]>([]);
@@ -94,10 +96,11 @@ export default function AllStreams() {
                 <div className="loading">
                     <img 
                         className="spinner"
-                        src="src\assets\Designer.jpeg" 
+                        src={designerImage} 
                         alt="Loading Icon" 
                         style={{ width: '200px', height: '200px', marginTop: '60px', marginLeft: '665px' }} 
                     />
+
                 <div className="loading-text">
                     <span className="loading-text-words">L</span>
                     <span className="loading-text-words">O</span>

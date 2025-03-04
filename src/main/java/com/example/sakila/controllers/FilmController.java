@@ -50,8 +50,8 @@ public class FilmController {
         return FilmOutput.from(filmService.updateFilm(id, filmInput));
     }
 
-    @DeleteMapping("/films")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/films")
     public void deleteFilm(@RequestParam Short id){
         filmService.deleteFilm(id);
         }
