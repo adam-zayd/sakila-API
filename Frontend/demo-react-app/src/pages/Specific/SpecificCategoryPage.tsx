@@ -1,4 +1,4 @@
-import SpecificCategory from "../components/SpecificCategory";
+import SpecificCategory from "../../components/SpecificCategory";
 
 
 export default function SpecificCategoryPage(){

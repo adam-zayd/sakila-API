@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { baseUrl } from "../../config";
 import { useNavigate, useParams } from "react-router";
 import "./Buttons.css";
+import "./SpecificDisplay.css";
 
 export default function UpdateActor() {
     const { id } = useParams();

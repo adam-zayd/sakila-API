@@ -1,5 +1,5 @@
 
-import UpdateMovie from "../components/UpdateMovie";
+import UpdateMovie from "../../components/UpdateMovie";
 
 export default function UpdateFilmPage(){
     return <UpdateMovie />

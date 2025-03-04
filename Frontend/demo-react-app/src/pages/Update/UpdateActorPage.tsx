@@ -1,5 +1,5 @@
 
-import UpdateActor from "../components/UpdateActor";
+import UpdateActor from "../../components/UpdateActor";
 
 export default function UpdateActorPage(){
     return <UpdateActor />

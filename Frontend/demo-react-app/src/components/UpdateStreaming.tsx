@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { baseUrl } from "../../config";
 import { useNavigate, useParams } from "react-router";
 import "./Buttons.css";
+import "./SpecificDisplay.css";
 
 export default function UpdateStreaming() {
     const { id } = useParams();
@@ -13,6 +14,7 @@ export default function UpdateStreaming() {
 
     useEffect(() => {
         const fetchStreaming = async () => {
+            console.log(id);
             try {
                 const response = await fetch(`${baseUrl}/streams/${id}`);
                 

@@ -137,7 +137,6 @@ const handleSave = async () => {
                             <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            maxLength={255} 
                             rows={10} 
                             cols={100}
                         />
