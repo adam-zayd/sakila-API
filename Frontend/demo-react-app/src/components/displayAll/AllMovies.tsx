@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Movie } from "./PartialMovieCard";
+import { Movie } from "../entityCards/PartialMovieCard";
 import { Link } from "react-router";
-import "./AllDisplay.scss";
-import { baseUrl } from "../../config";
+import "../AllDisplay.scss";
+import { baseUrl } from "../../../config";
 import designerImage from "/NewDesigner.jpg";
 
 
@@ -84,6 +84,9 @@ export default function AllMovies() {
             <div className="fullPageContainer">
                 <button className="createButton">
                     <Link className="createLink" to="/films/create">CREATE MOVIE</Link>
+                </button>
+                <button className="createButton">
+                    <Link className="createLink" to="/films/search">SEARCH MOVIES</Link>
                 </button>
             </div>
 

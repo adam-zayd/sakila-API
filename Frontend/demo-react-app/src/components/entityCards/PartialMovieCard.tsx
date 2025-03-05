@@ -11,6 +11,7 @@ export interface Stream {
 }
 
 export interface Movie {
+    filmId: Key | null | undefined;
     id: number; 
     title: string;
     categories: Category[];

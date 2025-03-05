@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Streaming } from "./PartialStreamingCard";
+import { Streaming } from "../entityCards/PartialStreamingCard";
 import { Link } from "react-router";
-import "./AllDisplay.scss";
-import { baseUrl } from "../../config";
+import "../AllDisplay.scss";
+import { baseUrl } from "../../../config";
 import designerImage from "/NewDesigner.jpg";
 
 
@@ -76,6 +76,9 @@ export default function AllStreams() {
             <div className="fullPageContainer">
                 <button className="createButton">
                     <Link className="createLink" to="/streams/create">CREATE STREAM</Link>
+                </button>
+                <button className="createButton">
+                    <Link className="createLink" to="/streams/search">SEARCH STREAMING PLATFORMS</Link>
                 </button>
             </div>
 

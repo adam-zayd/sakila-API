@@ -1,44 +1,52 @@
 import { useState, useEffect } from "react";
-import { baseUrl } from "../../config";
+import { baseUrl } from "../../../config";
 import { useNavigate, useParams } from "react-router";
-import "./Buttons.css";
-import "./SpecificDisplay.css";
+import "../Buttons.css";
+import "../SpecificDisplay.css";
 
-export default function UpdateActor() {
+export default function UpdateStreaming() {
     const { id } = useParams();
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [name, setName] = useState("");
+    const [website, setWebsite] = useState("");
+    const [cost, setCost] = useState("");
     const [filmIds, setFilmIds] = useState<string[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchActor = async () => {
+        const fetchStreaming = async () => {
+            console.log(id);
             try {
-                const response = await fetch(`${baseUrl}/actors/${id}`);
+                const response = await fetch(`${baseUrl}/streams/${id}`);
                 
                 if (!response.ok) {
-                    throw new Error("Failed to fetch actor data");
+                    throw new Error("Failed to fetch Stream data");
                 }
                 const data = await response.json();
-                setFirstName(data.firstName);
-                setLastName(data.lastName);
+                setName(data.name);
+                setWebsite(data.website);
+                setCost(data.cost);
                 setFilmIds(data.films.map((film: any) => String(film.filmId)));
             } catch (error: any) {
                 alert(`Error: ${error.message}`);
             }
         };
-        fetchActor();
+        fetchStreaming();
     }, [id]);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (firstName.trim().length === 0 || lastName.trim().length === 0) {
-            alert("First and last name cannot be empty.");
+        if (name.trim().length === 0 || website.trim().length === 0) {
+            alert("Name and Website cannot be empty.");
             return;
         }
-        if (firstName.length > 45 || lastName.length > 45) {
-            alert("First and last name must be between 1 and 45 characters.");
+        if (name.length > 45 || website.length > 255) {
+            alert("Name must be between 1 and 45 characters. Website must be between 1 and 255 characters.");
+            return;
+        }
+
+        if (cost && !/^\d{1,3}(\.\d{1,2})?$/.test(cost.trim())) {
+            alert("Cost can only have up to 3 digits before and up to 2 digits after the decimal.");
             return;
         }
 
@@ -50,23 +58,24 @@ export default function UpdateActor() {
         }
 
         try {
-            const response = await fetch(`${baseUrl}/actors/${id}`, {
+            const response = await fetch(`${baseUrl}/streams/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    firstName,
-                    lastName,
+                    name,
+                    website,
+                    cost,
                     films: parsedFilms
                 })
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to update actor. Film ID/s may be invalid. Be sure not to have a comma at the end of your input.");
+                throw new Error(errorData.message || "Failed to update Stream. Film ID/s may be invalid. Be sure not to have a comma at the end of your input.");
             }
 
-            alert("Actor updated successfully!");
-            navigate(`/actors/${id}`);
+            alert("Stream updated successfully!");
+            navigate(`/streams/${id}`);
         } catch (error: any) {
             alert(`Error: ${error.message}`);
         }
@@ -74,28 +83,37 @@ export default function UpdateActor() {
 
     const cancel = () => {
         if (!window.confirm("Are you sure you want to cancel this update? You will lose all changes.")) return;
-        navigate(`/actors/${id}`);
+        navigate(`/streams/${id}`);
     };
 
     return (
-        <div>
-            <h1 className="pageTitle">UPDATE ACTOR</h1>
+        <div className="container">
+            <h1 className="pageTitle">UPDATE STREAM</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>First Name:</label>
+                    <label>Name:</label>
                     <input
                         type="text"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Last Name:</label>
+                    <label>Website:</label>
                     <input
                         type="text"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Cost:</label>
+                    <input
+                        type="text"
+                        value={cost}
+                        onChange={(e) => setCost(e.target.value)}
                         required
                     />
                 </div>

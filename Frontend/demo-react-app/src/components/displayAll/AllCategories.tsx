@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Category } from "./PartialCategoryCard";
+import { Category } from "../entityCards/PartialCategoryCard";
 import { Link } from "react-router";
-import "./AllDisplay.scss";
-import { baseUrl } from "../../config";
+import "../AllDisplay.scss";
+import { baseUrl } from "../../../config";
 import designerImage from "/NewDesigner.jpg";
 
 
@@ -76,6 +76,9 @@ export default function AllCategories() {
             <div className="fullPageContainer">
                 <button className="createButton">
                     <Link className="createLink" to="/categories/create">CREATE CATEGORIES</Link>
+                </button>
+                <button className="createButton">
+                    <Link className="createLink" to="/categories/search">SEARCH CATEGORIES</Link>
                 </button>
             </div>
 

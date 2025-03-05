@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { baseUrl } from "../../config";
+import { baseUrl } from "../../../config";
 import { useNavigate, useParams } from "react-router";
-import "./Buttons.css";
-import "./SpecificDisplay.css";
+import "../Buttons.css";
+import "../SpecificDisplay.css";
 
 export default function UpdateMovie() {
     const { id } = useParams();
@@ -118,7 +118,7 @@ export default function UpdateMovie() {
     };
 
     return (
-        <div>
+        <div className="container">
             <h1 className="pageTitle">UPDATE MOVIE</h1>
             <form onSubmit={handleSubmit}>
             <div>

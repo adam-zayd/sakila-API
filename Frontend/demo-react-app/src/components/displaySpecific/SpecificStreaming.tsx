@@ -1,9 +1,9 @@
 import {useState, useEffect} from "react";
 import {useParams,useNavigate,Link} from "react-router";
-import {Streaming} from "./StreamingCard";
-import {baseUrl} from "../../config.ts";
-import "./Buttons.css";
-import "./SpecificDisplay.css";
+import {Streaming} from "../entityCards/StreamingCard";
+import {baseUrl} from "../../../config.ts";
+import "../Buttons.css";
+import "../SpecificDisplay.css";
 import { Edit } from "lucide-react";
 
 export default function SpecificStreaming(){
@@ -142,7 +142,8 @@ const cancel = () => {
                                 />
                             ) : (
                                 <>
-                                    {website}
+                                    <a className="streamLink" href={website} target="_blank" rel="noopener noreferrer">
+                                    {website.replace(/^https?:\/\//, "")}</a>
                                     <Edit className= "editButton"
                                     size={14}
                                         onClick={handleEdit} 

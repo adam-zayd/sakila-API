@@ -1,4 +1,4 @@
-import SpecificStreaming from "../../components/SpecificStreaming";
+import SpecificStreaming from "../../components/displaySpecific/SpecificStreaming";
 
 
 export default function SpecificStreamingPage(){

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { baseUrl } from "../../config";
+import { baseUrl } from "../../../config";
 import { useNavigate } from "react-router";
-import "./Buttons.css";
+import "../Buttons.css";
 
 export default function CreateStream() {
     const [name, setName] = useState("");
@@ -73,7 +73,7 @@ export default function CreateStream() {
     };
 
     return (
-        <div>
+        <div className="container">
             <h1 className="pageTitle">CREATE STREAMING PLATFORM</h1>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -116,7 +116,7 @@ export default function CreateStream() {
  
                     />
                 </div>
-                <button type="submit" className= "saveButton">SAVE</button>
+                <button type="submit" className= "saveButton" onClick={handleSubmit}>SAVE</button>
                 <button type="button" className="cancelButton" onClick={cancel}>CANCEL</button>
             </form>
         </div>

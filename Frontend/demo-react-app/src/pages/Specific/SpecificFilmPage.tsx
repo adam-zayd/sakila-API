@@ -1,4 +1,4 @@
-import SpecificMovie from "../../components/SpecificMovie";
+import SpecificMovie from "../../components/displaySpecific/SpecificMovie";
 
 
 export default function SpecificFilmPage(){

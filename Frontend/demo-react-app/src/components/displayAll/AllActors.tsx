@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Actor } from "./PartialActorCard";
+import { Actor } from "../entityCards/PartialActorCard";
 import { Link } from "react-router";
-import "./AllDisplay.scss";
-import { baseUrl } from "../../config";
+import "../AllDisplay.scss";
+import { baseUrl } from "../../../config";
 import designerImage from "/NewDesigner.jpg";
 
 export default function AllActors() {
@@ -75,6 +75,9 @@ export default function AllActors() {
             <div className="fullPageContainer">
     <button className="createButton">
         <Link className="createLink" to="/actors/create">CREATE ACTOR</Link>
+    </button>
+    <button className="createButton">
+        <Link className="createLink" to="/actors/search">SEARCH ACTORS</Link>
     </button>
 </div>
 

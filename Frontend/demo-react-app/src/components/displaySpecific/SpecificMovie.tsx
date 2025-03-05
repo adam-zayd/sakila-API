@@ -1,11 +1,11 @@
 
 import {useState, useEffect} from "react";
 import { Link, useParams, useNavigate } from "react-router";
-import {Movie} from "./MovieCard";
-import "./SpecificDisplay.css";
-import {baseUrl} from "../../config.ts";
+import {Movie} from "../entityCards/MovieCard.tsx";
+import "../SpecificDisplay.css";
+import {baseUrl} from "../../../config.ts";
 import { Edit } from "lucide-react"; 
-import "./Buttons.css";
+import "../Buttons.css";
 
 export default function SpecificMovie(){
     const {id}= useParams();

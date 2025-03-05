@@ -1,4 +1,4 @@
-import CreateMovie from "../../components/CreateMovie";
+import CreateMovie from "../../components/create/CreateMovie";
 
 export default function CreateFilmsPage(){
     return <CreateMovie />

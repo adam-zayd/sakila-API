@@ -1,4 +1,4 @@
-import SpecificActor from "../../components/SpecificActor";
+import SpecificActor from "../../components/displaySpecific/SpecificActor";
 
 
 export default function SpecificActorPage(){

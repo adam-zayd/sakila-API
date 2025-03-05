@@ -1,28 +1,26 @@
 import { useState } from "react";
-import { baseUrl } from "../../config";
+import { baseUrl } from "../../../config";
 import { useNavigate } from "react-router";
-import "./Buttons.css";
+import "../Buttons.css";
 
-export default function CreateActor() {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+export default function CreateCategory() {
+    const [name, setName] = useState("");
     const [filmIds, setFilmIds] = useState<string[]>([]);
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (firstName.trim().length === 0 || lastName.trim().length === 0) {
-            alert("First and last name cannot be empty.");
+        if (name.trim().length === 0){
+            alert("Name cannot be empty.");
             return;
         }
-        if (firstName.length > 45 || lastName.length > 45) {
-            alert("First and last name must be between 1 and 45 characters.");
+        if (name.length > 25) {
+            alert("Name must be between 1 and 25 characters.");
             return;
         }
 
         const parsedFilms = filmIds.map(id => Number(id.trim()));
-
         if (parsedFilms.some(isNaN)) {
             alert("One or more Film IDs are not valid numbers.");
             return;
@@ -30,23 +28,24 @@ export default function CreateActor() {
 
 
         try {
-            const response = await fetch(`${baseUrl}/actors`, {
+            console.log(parsedFilms);
+        
+            const response = await fetch(`${baseUrl}/categories`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    firstName,
-                    lastName,
+                    name,
                     films: parsedFilms
                 })
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to create actor. Film ID/s may be invalid.");
+                throw new Error(errorData.message || "Failed to create category. Film ID/s may be invalid.");
             }
 
-            alert("Actor created successfully!");
-            navigate("/actors");
+            alert("Category created successfully!");
+            navigate("/categories");
         } catch (error: any) {
             alert(`Error: ${error.message}`);
         }
@@ -54,30 +53,20 @@ export default function CreateActor() {
 
     const cancel = () => {
         if (!window.confirm("Are you sure you want to cancel this create? You will lose all changes.")) return;
-        navigate("/actors");
+        navigate("/categories");
     };
 
     return (
-        <div>
-            <h1 className="pageTitle">CREATE ACTOR</h1>
+        <div className="container">
+            <h1 className="pageTitle">CREATE CATEGORY</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>First Name:</label>
+                    <label>Name:</label>
                     <input
-                        className= "firstNameInput"
+                        className= "categoryNameInput"
                         type="text"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Last Name:</label>
-                    <input
-                    className= "lastNameInput"
-                        type="text"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         required
                     />
                 </div>
@@ -91,7 +80,7 @@ export default function CreateActor() {
  
                     />
                 </div>
-                <button type="submit" className= "saveButton">SAVE</button>
+                <button type="submit" className= "saveButton" onClick={handleSubmit}>SAVE</button>
                 <button type="button" className="cancelButton" onClick={cancel}>CANCEL</button>
             </form>
         </div>

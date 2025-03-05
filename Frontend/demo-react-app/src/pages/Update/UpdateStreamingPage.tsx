@@ -1,5 +1,5 @@
 
-import UpdateStreaming from "../../components/UpdateStreaming";
+import UpdateStreaming from "../../components/update/UpdateStreaming";
 
 export default function UpdateStreamingPage(){
     return <UpdateStreaming />

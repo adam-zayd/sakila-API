@@ -1,0 +1,28 @@
+
+input {
+    background-color: #111; 
+    border: 2px solid #ff1a1a; 
+    color: #fff; 
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+}
+
+input:focus {
+    border-color: #ff4d4d; 
+    box-shadow: 0 0 10px #ff0000, 0 0 20px #ff1a1a; 
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    align-items: center;
+}
+
+
+

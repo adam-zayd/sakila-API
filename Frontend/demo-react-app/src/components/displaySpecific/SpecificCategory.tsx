@@ -1,11 +1,11 @@
 import {useState, useEffect} from "react";
 import { useParams } from "react-router";
-import {Category} from "./CategoryCard";
-import {baseUrl} from "../../config.ts";
+import {Category} from "../entityCards/CategoryCard.tsx";
+import {baseUrl} from "../../../config.ts";
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
-import "./Buttons.css";
-import "./SpecificDisplay.css";
+import "../Buttons.css";
+import "../SpecificDisplay.css";
 import { Edit } from "lucide-react";
 
 export default function SpecificCategory(){

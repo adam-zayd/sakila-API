@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router";
-import { Actor } from "./ActorCard";
-import { baseUrl } from "../../config.ts";
+import { Actor } from "../entityCards/ActorCard.tsx";
+import { baseUrl } from "../../../config.ts";
 import { Edit } from "lucide-react"; 
-import "./Buttons.css";
-import "./SpecificDisplay.css";
+import "../Buttons.css";
+import "../SpecificDisplay.css";
 
 export default function SpecificActor() {
     const { id } = useParams();

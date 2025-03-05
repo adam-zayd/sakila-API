@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { baseUrl } from "../../config";
+import { baseUrl } from "../../../config";
 import { useNavigate, useParams } from "react-router";
-import "./Buttons.css";
-import "./SpecificDisplay.css";
+import "../Buttons.css";
+import "../SpecificDisplay.css";
 
 export default function UpdateCategory() {
     const { id } = useParams();
@@ -75,7 +75,7 @@ export default function UpdateCategory() {
     };
 
     return (    
-        <div>
+        <div className="container">
             <h1 className="pageTitle">UPDATE CATEGORY</h1>
             <form onSubmit={handleSubmit}>
                 <div>

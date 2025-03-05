@@ -1,4 +1,4 @@
-import CreateActor from "../../components/CreateActor";
+import CreateActor from "../../components/create/CreateActor";
 
 export default function CreateActorsPage(){
     return <CreateActor />
