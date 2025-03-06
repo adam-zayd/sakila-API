@@ -1,4 +1,6 @@
 
+import { Key } from "react";
+
 
 export interface Category {
     categoryId: number;
@@ -11,8 +13,10 @@ export interface Stream {
 }
 
 export interface Movie {
+    filmId: Key | null | undefined;
     id: number; 
     title: string;
     categories: Category[];
     streams: Stream[];
 }
+
