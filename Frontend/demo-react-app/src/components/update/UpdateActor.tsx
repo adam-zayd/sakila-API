@@ -84,6 +84,7 @@ export default function UpdateActor() {
                 <div>
                     <label>First Name:</label>
                     <input
+                        className="nameInput"
                         type="text"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
@@ -93,6 +94,7 @@ export default function UpdateActor() {
                 <div>
                     <label>Last Name:</label>
                     <input
+                        className="lastNameInput"
                         type="text"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
@@ -102,6 +104,7 @@ export default function UpdateActor() {
                 <div>
                     <label>Film IDs (comma-separated):</label>
                     <input
+                        className="filmIdsInput"
                         type="text"
                         value={filmIds.join(",")}
                         onChange={(e) => setFilmIds(e.target.value.split(",").map(id => id.trim()))}

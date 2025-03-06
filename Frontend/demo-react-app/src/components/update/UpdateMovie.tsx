@@ -124,7 +124,7 @@ export default function UpdateMovie() {
             <div>
                     <label>Title:</label>
                     <input
-                        className= "titleInput"
+                        className= "nameInput"
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
@@ -191,6 +191,7 @@ export default function UpdateMovie() {
                 <div>
                     <label>Cast (Actor-Ids, comma-separated):</label>
                     <input
+                        className= "castInput"
                         type="text"
                         value={cast.join(",")}
                         onChange={(e) => setCast(e.target.value.split(",").map(id => id.trim()))}
@@ -199,7 +200,7 @@ export default function UpdateMovie() {
                 <div>
                     <label>Categories (Category-IDs, comma-separated):</label>
                     <input
-                    className= "categoriesInput"
+                        className= "categoriesInput"
                         type="text"
                         value={categories.join(",")}
                         onChange={(e) => setCategories(e.target.value.split(",").map(id => id.trim()))}
@@ -208,7 +209,7 @@ export default function UpdateMovie() {
                 <div>
                     <label>Streams (Stream-IDs, comma-separated):</label>
                     <input
-                    className= "streamsInput"
+                        className= "streamsInput"
                         type="text"
                         value={streams.join(",")}
                         onChange={(e) => setStreams(e.target.value.split(",").map(id => id.trim()))}

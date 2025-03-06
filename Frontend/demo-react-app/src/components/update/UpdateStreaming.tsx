@@ -45,7 +45,7 @@ export default function UpdateStreaming() {
             return;
         }
 
-        if (cost && !/^\d{1,3}(\.\d{1,2})?$/.test(cost.trim())) {
+        if (cost && !/^\d{1,3}(\.\d{1,2})?$/.test(cost)) {
             alert("Cost can only have up to 3 digits before and up to 2 digits after the decimal.");
             return;
         }
@@ -93,6 +93,7 @@ export default function UpdateStreaming() {
                 <div>
                     <label>Name:</label>
                     <input
+                        className="nameInput"
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -102,6 +103,7 @@ export default function UpdateStreaming() {
                 <div>
                     <label>Website:</label>
                     <input
+                        className="websiteInput"
                         type="text"
                         value={website}
                         onChange={(e) => setWebsite(e.target.value)}
@@ -111,6 +113,7 @@ export default function UpdateStreaming() {
                 <div>
                     <label>Cost:</label>
                     <input
+                        className="costInput"
                         type="text"
                         value={cost}
                         onChange={(e) => setCost(e.target.value)}
@@ -120,6 +123,7 @@ export default function UpdateStreaming() {
                 <div>
                     <label>Film IDs (comma-separated):</label>
                     <input
+                        className="filmIdsInput"
                         type="text"
                         value={filmIds.join(",")}
                         onChange={(e) => setFilmIds(e.target.value.split(",").map(id => id.trim()))}

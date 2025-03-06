@@ -79,8 +79,9 @@ export default function UpdateCategory() {
             <h1 className="pageTitle">UPDATE CATEGORY</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>First Name:</label>
+                    <label>Name:</label>
                     <input
+                        className="nameInput"
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -90,6 +91,7 @@ export default function UpdateCategory() {
                 <div>
                     <label>Film IDs (comma-separated):</label>
                     <input
+                        className="filmIdsInput"
                         type="text"
                         value={filmIds.join(",")}
                         onChange={(e) => setFilmIds(e.target.value.split(",").map(id => id.trim()))}
